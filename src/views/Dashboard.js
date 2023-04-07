@@ -23,12 +23,12 @@ function Dashboard() {
             <Card className="card-stats">
               <CardBody>
                 <Row>
-                  <Col md="4" xs="5">
+                  <Col md="2" xs="5">
                     <div className="icon-big text-center icon-warning text-warning">
                       <i className="nc-icon nc-paper" />
                     </div>
                   </Col>
-                  <Col md="8" xs="7">
+                  <Col md="10" xs="7">
                     <div className="numbers">
                       <p className="card-category">3 active notices</p>
                       <Link to="/admin/Notices" className="linktag" ><CardTitle tag="p">Create Notice <FontAwesomeIcon icon={faCirclePlus} style={{ marginLeft: "10px", color: "#7a7a7a", }} /></CardTitle></Link>
@@ -49,12 +49,12 @@ function Dashboard() {
             <Card className="card-stats">
               <CardBody>
                 <Row>
-                  <Col md="4" xs="5">
+                <Col md="2" xs="5">
                     <div className="icon-big text-center icon-warning">
                       <i className="nc-icon nc-credit-card text-primary" />
                     </div>
                   </Col>
-                  <Col md="8" xs="7">
+                  <Col md="10" xs="7">
                     <div className="numbers">
                       <p className="card-category">8 Pending Bills</p>
                       <Link to="/admin/Bills" className="linktag" ><CardTitle tag="p">Create Bills <FontAwesomeIcon icon={faCirclePlus} style={{ marginLeft: "10px", color: "#7a7a7a", }} /></CardTitle></Link>
@@ -75,12 +75,12 @@ function Dashboard() {
             <Card className="card-stats">
               <CardBody>
                 <Row>
-                  <Col md="4" xs="5">
+                <Col md="2" xs="5">
                     <div className="icon-big text-center icon-warning">
                       <i className="nc-icon nc-settings text-danger" />
                     </div>
                   </Col>
-                  <Col md="8" xs="7">
+                  <Col md="10" xs="7">
                     <div className="numbers">
                       <p className="card-category">4 ongoing</p>
                       <Link to="/admin/Maintenance" className="linktag" ><CardTitle tag="p">Add Maintenance <FontAwesomeIcon icon={faCirclePlus} style={{color: "#7a7a7a", }} /></CardTitle></Link>
