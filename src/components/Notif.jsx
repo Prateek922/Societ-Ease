@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleDot } from '@fortawesome/free-solid-svg-icons';
 
 export default function Notif() {
-    const notificationAlert = React.useRef();
 
     return (
         <>
