@@ -26,6 +26,7 @@ export async function getAllComplaints(){
 
     });
 
+    // console.log(await response.json())
     return await response.json();
 }
 

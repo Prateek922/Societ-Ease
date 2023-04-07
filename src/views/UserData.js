@@ -1,5 +1,4 @@
-import React from "react";
-// reactstrap components
+import React, {useEffect, useState} from "react";
 import {
   Card,
   CardHeader,
@@ -9,10 +8,41 @@ import {
   Row,
   Col
 } from "reactstrap";
+import {getAllResident} from '../api/Admin/adminApi';
 
+function UserData() {
+  const [residentList, setResidentList] = useState({
+    "success": true,
+    "residentsData": [
+      {
+        "_id": "64299699acb38abbbcce8cb8",
+        "residentID": "903c6429-9884-48ce-83e7-887630677c14",
+        "residentName": "prashant",
+        "residentContactNumber": "8888888888",
+        "residentEmail": "prash@gmail.com",
+        "residentAadhar": "444455556666",
+        "residentRoomNumber": 101,
+        "familyMembers": [],
+        "securityKey": "abcd",
+        "status": "active",
+        "__v": 0
+      }
+    ]
+  });
 
-function Tables() {
-
+  const fetchAllResident = async ()=>{
+    const response = getAllResident();
+    if(response.success){
+      console.log(response);
+      setResidentList(response);
+    }else{
+      console.log(response);
+    }
+  }
+  
+  useEffect(() => {
+    fetchAllResident();
+  }, [])
 
   return (
     <>
@@ -30,76 +60,21 @@ function Tables() {
                       <th>Name</th>
                       <th>Room no.</th>
                       <th>Contact No.</th>
-                      <th >Email</th>
+                      <th>Email</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><a href=""></a>Dakota Rice</td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                      <td >$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>Dakota Rice</td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                      <td >$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>Dakota Rice</td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                      <td >$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>Dakota Rice</td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                      <td >$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>Dakota Rice</td>
-                      <td>Niger</td>
-                      <td>Oud-Turnhout</td>
-                      <td >$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>Minerva Hooper</td>
-                      <td>Curaçao</td>
-                      <td>Sinaai-Waas</td>
-                      <td >$23,789</td>
-                    </tr>
-                    <tr>
-                      <td>Sage Rodriguez</td>
-                      <td>Netherlands</td>
-                      <td>Baileux</td>
-                      <td >$56,142</td>
-                    </tr>
-                    <tr>
-                      <td>Philip Chaney</td>
-                      <td>Korea, South</td>
-                      <td>Overland Park</td>
-                      <td >$38,735</td>
-                    </tr>
-                    <tr>
-                      <td>Doris Greene</td>
-                      <td>Malawi</td>
-                      <td>Feldkirchen in Kärnten</td>
-                      <td >$63,542</td>
-                    </tr>
-                    <tr>
-                      <td>Mason Porter</td>
-                      <td>Chile</td>
-                      <td>Gloucester</td>
-                      <td >$78,615</td>
-                    </tr>
-                    <tr>
-                      <td>Jon Porter</td>
-                      <td>Portugal</td>
-                      <td>Gloucester</td>
-                      <td >$98,615</td>
-                    </tr>
+                    {residentList.residentsData.map((resident)=>{
+                      return <>
+                        <tr key={resident.residentID}>
+                          <td><a href=""></a>{resident.residentName}</td>
+                          <td>{resident.residentRoomNumber}</td>
+                          <td>{resident.residentContactNumber}</td>
+                          <td >{resident.residentEmail}</td>
+                        </tr>
+                      </>
+                    })}
+                    
                   </tbody>
                 </Table>
               </CardBody>
@@ -113,4 +88,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default UserData;

@@ -1,65 +1,137 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
   Row,
   Col
 } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrash, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { getNotice, updateNotice, deleteNotice, addNotice } from "api/Notice/noticeApi";
+import NoticeItem from "components/Items/NoticeItem";
 
 
-
-function Tables() {
+function Notice() {
   const closeref = useRef();
+  const addRef = useRef();
   const editRef = useRef();
+  const delRef = useRef();
+  const closeDelRef = useRef();
+  const [delId, setDelId] = useState("")
+  const [noticeData, setNoticeData] = useState({
+    _id: "",
+    noticeID: "",
+    noticeSubject: "",
+    noticeDescription: "",
+    createdAt: "",
+    updatedAt: "",
+    __v: 0
+  })
+
+  const [noticeList, setNoticeList] = useState({
+    "success": true,
+    "notices": [
+      {
+        "_id": "642d8b32e700b17c4997263f",
+        "noticeID": "3d699093-ee88-4d83-a0ed-eda24637204c",
+        "noticeSubject": "This is demo subject",
+        "noticeDescription": "jhkhjkfhjkdfkdjfhdkjfdsjkfdsjkfhkjdfhkjsdfjkdshfjhjkdhfjdhfskjhksdjhfkjdsfjkdsfnmsdfjkhfuhfjndsnfdsmffmdsfnsdbfdsjhfsdhfkjsn",
+        "createdAt": "2023-04-05T14:52:34.158Z",
+        "updatedAt": "2023-04-05T14:52:34.158Z",
+        "__v": 0
+      },
+
+    ]
+  })
+
+  const updateItem = (notice) => {
+    editRef.current.click();
+    setNoticeData(notice)
+  }
+
+  const deleteItem = (notice) => {
+    delRef.current.click();
+    setDelId(notice.noticeID);
+    console.log(notice.noticeID)
+  }
+
+  const handleChange = (e) => {
+    setNoticeData({ ...noticeData, [e.target.name]: e.target.value })
+  }
+
+  const handleUpdate = async () => {
+    const response = await updateNotice(noticeData);
+    if (response.success) {
+      console.log(response);
+      fetchAllNotices();
+    } else {
+      console.log(response);
+    }
+
+  }
+
+  const handleClick = () => {
+    closeDelRef.current.click();
+    if (delId) handleDelete();
+  }
+
+  const handleDelete = async () => {
+    console.log(delId)
+    const response = await deleteNotice(delId);
+    if (response.success) {
+      console.log(response)
+      fetchAllNotices();
+    }
+  }
+
+
+
+  const handleCreate = async () => {
+    const response = await addNotice(noticeData);
+    if (response.success) {
+      console.log(response)
+    } else {
+      console.log(response);
+    }
+  }
+
+  const fetchAllNotices = async () => {
+    const response = await getNotice();
+    if (response.success) {
+      console.log(response);
+      setNoticeList(response);
+    } else {
+      console.log(response);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllNotices();
+  }, [])
 
   return (
     <>
       <div className="content w-auto h-auto">
         <Row>
-          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center" ><FontAwesomeIcon icon={faCirclePlus} style={{ height: "200px", color: "#7a7a7a", }} onClick={() => { editRef.current.click(); console.log("hello") }} /></Col>
-          <Col lg="4" md="4" sm="12">
-            <Card className="card-stats">
-              <CardHeader>
-              <CardTitle tag="h4" className="d-flex flex-row">Notice's Title
-              <div className="ml-auto">
-              <FontAwesomeIcon  icon={faPen} size="sm" style={{position:"relative",right:"25px",color: "#e4391b",}} />
-                <FontAwesomeIcon  icon={faTrash} size="sm" style={{color: "#00d6b3",}} />
-              </div>      
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
-                <p className="card-category">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                  molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                  numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-                  optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-                  obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-                  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-                  tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-                  quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos </p>
-              </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <i className="fas fa-sync-alt" /> Notice dated 14/01/2023
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
+          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center" ><FontAwesomeIcon icon={faCirclePlus} style={{ height: "200px", color: "#7a7a7a", }} onClick={() => { addRef.current.click(); console.log("hello") }} /></Col>
+          {noticeList.notices.map((notice) => {
+            return <>
+              <NoticeItem updateItem={updateItem} deleteItem={deleteItem} notice={notice} ></NoticeItem>
+            </>
+          })}
         </Row>
 
         {/* Modal activation buttons */}
-        <button className="btn d-none" ref={editRef} data-target="#editModal" data-toggle="modal">edit</button>
-        {/* <button className="btn d-none"  ref= {delRef} data-target="#deleteModal" data-toggle="modal">delete</button> */}
+        {/* Adding Notice */}
+        <button className="btn d-none" ref={addRef} data-target="#addModal" data-toggle="modal">Add</button>
+        {/* Update Notice */}
+        <button className="btn d-none" ref={editRef} data-target="#editModal" data-toggle="modal">Edit</button>
+        {/* Delete Notice */}
+        <button className="btn d-none" ref={delRef} data-target="#deleteModal" data-toggle="modal">delete</button>
 
       </div>
 
+      {/* Add notice modal */}
       <div>
-        <div className="modal fade" id="editModal" tabIndex="-1" aria-labelledby="editModal" aria-hidden="true">
+        <div className="modal fade" id="addModal" tabIndex="-1" aria-labelledby="addModal" aria-hidden="true">
           <div className="modal-dialog custom-modal-box">
             <div className="modal-content">
               <div className="modal-header">
@@ -70,19 +142,19 @@ function Tables() {
                 <div className="log popup-form">
                   <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
                     <div className="form-box popup-form-box" style={{ height: "auto", width: "100%" }}>
-                      <form className="row g-3">
+                      <form className="row g-3" onSubmit={handleCreate}>
                         <div className="col-12 mb-4">
                           <label htmlFor="subject" className="form-label mb-2">Subject*</label>
-                          <input type="text" name="noticeSubject" className="form-control" id="inputAddress" required placeholder="" />
+                          <input type="text" name="noticeSubject" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
                         </div>
                         <div className="col-12 mb-4">
                           <label htmlFor="description" className="form-label mb-2">Description*</label>
-                          <textarea className="form-control" name="noticeDescription" placeholder="Body of notice" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
+                          <textarea className="form-control" name="noticeDescription" onChange={handleChange} placeholder="Body of notice" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
                         </div>
 
                         <div className="col-12">
-                          <button ref={closeref} type="button" className="btn" data-bs-dismiss="modal">Close</button>
-                          <button type="submit" className="btn btn-success" >Add Notice</button>
+                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button type="submit" className="btn btn-success"> Add Notice</button>
                         </div>
                       </form>
                     </div>
@@ -94,8 +166,62 @@ function Tables() {
         </div>
       </div>
 
+      {/* Update notice modal */}
+      <div>
+        <div className="modal fade" id="editModal" tabIndex="-1" aria-labelledby="editModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Update Notice</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="row modal-body">
+                <div className="log popup-form">
+                  <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="form-box popup-form-box" style={{ height: "auto", width: "100%" }}>
+                      <form className="row g-3" onSubmit={handleUpdate}>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Subject*</label>
+                          <input type="text" name="noticeSubject" value={noticeData.noticeSubject} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="description" className="form-label mb-2">Description*</label>
+                          <textarea className="form-control" name="noticeDescription" value={noticeData.noticeDescription} onChange={handleChange} placeholder="Body of notice" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
+                        </div>
+
+                        <div className="col-12">
+                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button type="submit" className="btn btn-success">Update</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Delete modal */}
+      <div>
+        <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Delete notice</h5>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <p>Do you want to delete this notice?</p>
+                <button type="submit" className="btn btn-outline-danger" onClick={handleClick}>Yes</button>
+                <button type="button" ref={closeDelRef} className="btn btn-outline-success mx-3" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
 
-export default Tables;
+export default Notice;

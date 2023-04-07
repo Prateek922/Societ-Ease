@@ -8,7 +8,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import Notif from "../components/Notif";
+import Complaints from "../components/Complaints";
 import { Link } from 'react-router-dom';
 import "../assets/css/paper-dashboard.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -98,7 +98,7 @@ function Dashboard() {
             </Card>
           </Col>
         </Row>
-        <Notif />
+        <Complaints />
       </div>
 
     </>

@@ -46,6 +46,7 @@ export async function deleteNotice(noticeID){
     const response = await fetch(`${API_URL}/api/notice/deletenotice`,{
         method:'DELETE',
         headers:{
+            'Content-Type': 'application/json',
             'auth-token': `${adminAuthToken}`
         },
         body: JSON.stringify({noticeID})
