@@ -3,6 +3,7 @@ import Resident from "views/UserData.js";
 import Bills from "views/Bills.js";
 import Notice from "views/Notice.js";
 import Maintenance from "views/Maintenance.js";
+import User from "views/User.js";
 
 var routes = [
   {
@@ -40,5 +41,13 @@ var routes = [
     component: Maintenance,
     layout: "/admin"
   },
+  {
+    path: "/User",
+    name: "User",
+    icon: "nc-icon nc-settings",
+    component: User,
+    layout: "/admin"
+  },
 ];
 export default routes;
+  

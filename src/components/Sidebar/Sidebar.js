@@ -41,7 +41,7 @@ function Sidebar(props) {
         >
           <div className="logo-img">
             <img src={logo} alt="react-logo" />
-          </div>
+          </div>  
         </a>
         <a
           href="#"
