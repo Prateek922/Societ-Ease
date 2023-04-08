@@ -17,7 +17,7 @@ const paymentSchema = new Schema({
     },
     paymentDate: {
         type: Date,
-        required: true
+        // required: true
     },
     paymentStatus:{
         type: String,

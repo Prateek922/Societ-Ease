@@ -1,7 +1,9 @@
 const express = require('express');
 const date = require('date-and-time');
 const router = express.Router();
-const Bill = require('../../models/resident/Bill.model');
+const Bill = require('../../models/bill/Bill.model');
+const Resident = require('../../models/resident/Resident.model');
+const Payment = require('../../models/bill/Payment.model');
 const { uuid } = require('uuidv4');
 const fetchuser = require('../../middlewares/fetchuser');
 
@@ -18,80 +20,97 @@ router.post('/createbill',fetchuser,async (req,res)=>{
         }
 
         const bill = await Resident.find({residentRoomNumber: billRoomNumber}).then(async (res)=>{
-            return await Bill.find({billRoomNumber}).then(async (bi)=>{
+            return await Bill.find({billRoomNumber, billType}).then(async (bi)=>{
                 if(bi.length == 0) return await Bill.create({
                     billID: uuid(),
                     billRoomNumber,
                     billType,
-                    billForResident,
-                    billDue: billAmount
+                    billForResident: res[0].residentID,
+                    billDue: billAmount,
+                    billTotal: billAmount,
+                    billStatus:"Unpaid"
                 })
+                else {
+                    return await Bill.findOneAndUpdate({billRoomNumber, billType},
+                        {$inc: {billDue: billAmount, billTotal: billAmount}, billStatus: "Unpaid"},
+                        {new: true}    
+                    )
+                }
             })
         })
-        const notice = await Bill.create({
-            noticeID: uuid(),
-            noticeSubject,
-            noticeDescription
+
+        success = true;
+        return res.status(200).json({success, bill});
+    }catch(err){
+        return res.status(500).json({success,error:err.message,message:"Internal server error"});
+    }
+});
+
+// ROUTE 2: POST Get all bills, admin auth
+router.post('/getallbill',fetchuser,async (req,res)=>{
+    let success = false;
+    
+    try{
+
+        const userType = req.user.userType;
+
+        if(userType !== 'admin'){
+            return res.status(403).json({success, error:"Permission Denied!"})
+        }
+
+        const bills = await Bill.find({});
+        success = true;
+        return res.status(200).json({success, bills});
+    }catch(err){
+        return res.status(500).json({success,error:err.message,message:"Internal server error"});
+    }
+});
+
+// ROUTE 3: POST Get my bills, admin auth
+router.post('/getmybill',fetchuser,async (req,res)=>{
+    let success = false;
+    
+    try{
+        const userType = req.user.userType;
+        const billForResident = req.user.id || req.body.residentID;
+
+        if(!((userType === 'admin') || (userType === 'resident' && user.userID === billForResident))){
+            return res.status(403).json({success, error:"Permission Denied!"})
+        }
+
+        const bills = await Bill.find({billForResident});
+        success = true;
+        return res.status(200).json({success, bills});
+    }catch(err){
+        return res.status(500).json({success,error:err.message,message:"Internal server error"});
+    }
+});
+
+// ROUTE 4: Post Pay my bills, resident auth
+router.post('/paybill',fetchuser,async (req,res)=>{
+    let success = false;
+    
+    try{
+        const userType = req.user.userType;
+        const billForResident = req.body.residentID;
+        const {paymentAmount, billType, transactionID} = req.body;
+        if(userType!=='resident'){
+            return res.status(403).json({success, error:"Permission Denied!"})
+        }
+
+        const bill = await Payment.create({
+            paymentID: transactionID,
+            paymentAmount,
+            paidBy: req.user.id,
+            paymentStatus: "Successful"
+        }).then(async ()=>{
+            return await Bill.findOneAndUpdate({billForResident, billType},
+            {$inc: {billDue: -1*paymentAmount}, billStatus: "Paid"},
+            {new: true}
+            )
         })
-
         success = true;
-        return res.status(200).json({success, notice});
-    }catch(err){
-        return res.status(500).json({success,error:err.message,message:"Internal server error"});
-    }
-});
-
-// ROUTE 2: Get all notices
-router.post('/getnotice',async (req,res)=>{
-    let success = false;
-    
-    try{
-        const notices = await Notice.find({});
-        success = true;
-        return res.status(200).json({success,notices});
-    }catch(err){
-        return res.status(500).json({success,error:err.message,message:"Internal server error"});
-    }
-});
-
-// ROUTE 3: PUT Update notice, Admin authentication needed
-router.put('/updatenotice',fetchuser,async (req,res)=>{
-    let success = false;
-    
-    try{
-        const userType = req.user.userType;
-        const noticeID = req.body.noticeID;
-
-        if(userType !== 'admin'){
-            return res.status(403).json({success, error:"Permission Denied!"})
-        }
-
-        const notice = await Notice.findOneAndUpdate({noticeID},
-            {...req.body} , {new: true}
-        ) 
-
-        success = true;
-        return res.status(200).json({success, notice});
-    }catch(err){
-        return res.status(500).json({success,error:err.message,message:"Internal server error"});
-    }
-});
-
-// ROUTE 3:  DELETE notice, Admin authentication needed
-router.delete('/deletenotice',fetchuser,async (req,res)=>{
-    let success = false;
-    
-    try{
-        const userType = req.user.userType;
-        const noticeID = req.body.noticeID;
-
-        if(userType !== 'admin'){
-            return res.status(403).json({success, error:"Permission Denied!"})
-        }
-
-        const notice = await Notice.findOneAndDelete({noticeID});
-        success = true;
-        return res.status(200).json({success, notice});
+        return res.status(200).json({success, bill});
     }catch(err){
         return res.status(500).json({success,error:err.message,message:"Internal server error"});
     }

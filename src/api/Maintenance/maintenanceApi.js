@@ -46,6 +46,7 @@ export async function deleteMaintenance(maintenanceID){
     const response = await fetch(`${API_URL}/api/maintenance/deletemaintenance`,{
         method:'DELETE',
         headers:{
+            'Content-Type': 'application/json',
             'auth-token': `${adminAuthToken}`
         },
         body: JSON.stringify({maintenanceID})

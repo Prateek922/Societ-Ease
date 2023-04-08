@@ -1,6 +1,4 @@
-import React from "react";
-
-// reactstrap components
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -14,18 +12,42 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { updateResident } from "api/Admin/adminApi";
 
-function User() {
+function User(props) {
+
+  const { setResi, resi, fetchAll } = props;
+  const [resident, setResident] = useState(resi);
+  const [rs, setRs] = useState(resi)
+  const handleChange = (e) => {
+    setRs({ ...rs, [e.target.name]: e.target.value })
+  }
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await updateResident(rs);
+    if (response.success) {
+      console.log(response);
+      setRs(response.resident)
+      setResident(rs)
+    } else {
+      console.log(response)
+    }
+  }
+
+
   return (
     <>
       <div className="content">
+        <h6 style={{ cursor: "pointer" }} onClick={() => { setResi(null); fetchAll(); }}> &larr; Back</h6>
         <Row>
           <Col md="4">
             <Card className="card-user">
               <div className="image">
-              <img
-                      src={require("assets/img/solid-color-image.png")}
-                    />
+                <img
+                  src={require("assets/img/solid-color-image.png")}
+                />
               </div>
               <CardBody>
                 <div className="author">
@@ -35,9 +57,9 @@ function User() {
                       className="avatar border-gray"
                       src={require("assets/img/logo-profile.png")}
                     />
-                    <h5 className="title">Chet Faker</h5>
+                    <h5 className="title">{resident.residentName}</h5>
                   </a>
-                  <p className="description"><strong>Security key-</strong>XXXXXXXXXXXXXXX</p>
+                  <p className="description"><strong>Security key-</strong>{resident.securityKey}</p>
                 </div>
               </CardBody>
               <CardFooter>
@@ -46,27 +68,27 @@ function User() {
                   <Row>
                     <Col className="ml-auto" lg="3" md="6" xs="6">
                       <h5>
-                        12 <br />
+                        {resident.residentRoomNumber}<br />
                         <small>Room no.</small>
                       </h5>
                     </Col>
                     <Col className="ml-auto mr-auto" lg="4" md="6" xs="6">
                       <h5>
-                        2GB <br />
+                        2 <br />
                         <small>Complaints</small>
                       </h5>
                     </Col>
                     <Col className="mr-auto" lg="3">
                       <h5>
-                        24,6$ <br />
-                        <small>Pending bill</small>
+                        2000<br />
+                        <small>Pending bills</small>
                       </h5>
                     </Col>
                   </Row>
                 </div>
               </CardFooter>
             </Card>
-           
+
           </Col>
           <Col md="8">
             <Card className="card-user">
@@ -74,26 +96,30 @@ function User() {
                 <CardTitle tag="h5">Edit Profile</CardTitle>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col className="pr-1" md="12">
                       <FormGroup>
                         <label>Name</label>
                         <Input
-                          defaultValue="Prateek"
+                          name="residentName"
+                          onChange={handleChange}
+                          defaultValue={resident.residentName}
                           placeholder="Company"
                           type="text"
                         />
                       </FormGroup>
                     </Col>
-                    </Row>
-                    <Row>
+                  </Row>
+                  <Row>
                     <Col className="pr-1" md="4">
                       <FormGroup>
                         <label>Contact No.</label>
                         <Input
-                          defaultValue="8696054228"
-                          placeholder="Username"
+                          name="residentContactNumber"
+                          onChange={handleChange}
+                          defaultValue={resident.residentContactNumber}
+                          placeholder=""
                           type="text"
                         />
                       </FormGroup>
@@ -103,7 +129,7 @@ function User() {
                         <label htmlFor="exampleInputEmail1">
                           Email
                         </label>
-                        <Input placeholder="prateeka922@gmail.com" type="email" />
+                        <Input placeholder="" name="residentEmail" onChange={handleChange} value={resident.residentEmail} type="email" />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -112,10 +138,11 @@ function User() {
                       <FormGroup>
                         <label>Aadhar Number</label>
                         <Input
-                        disabled
-                          defaultValue="XXXX XXXX XXXX XXXX"
-                          placeholder="Company"
+                          disabled
+                          defaultValue={resident.residentAadhar}
+                          placeholder=""
                           type="text"
+                          name="residentAadhar"
                         />
                       </FormGroup>
                     </Col>
@@ -125,8 +152,10 @@ function User() {
                       <FormGroup>
                         <label>Room number</label>
                         <Input
-                          defaultValue="620"
-                          placeholder="City"
+                          onChange={handleChange}
+                          name="residentRoomNumber"
+                          defaultValue={resident.residentRoomNumber}
+                          placeholder=""
                           type="text"
                         />
                       </FormGroup>
@@ -135,7 +164,7 @@ function User() {
                       <FormGroup>
                         <label>Complaints</label>
                         <Input
-                          defaultValue="6"
+                          defaultValue="2"
                           placeholder="Country"
                           type="text"
                           disabled
@@ -145,7 +174,7 @@ function User() {
                     <Col className="pl-1" md="4">
                       <FormGroup>
                         <label>Pending bills</label>
-                        <Input placeholder="2" type="number" disabled />
+                        <Input placeholder="" defaultValue="2000" type="number" disabled />
                       </FormGroup>
                     </Col>
                   </Row>

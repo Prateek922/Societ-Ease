@@ -1,111 +1,244 @@
 
-import React,{useRef} from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
   Row,
   Col
 } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen ,faTrash,faCirclePlus,faCircleDot} from '@fortawesome/free-solid-svg-icons';
-
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import MaintenanceItem from "components/Items/MaintenanceItem";
+import { getMaintenance, updateMaintenance, deleteMaintenance, addMaintenance } from "api/Maintenance/maintenanceApi";
 
 function Tables() {
   const closeref = useRef();
   const addRef = useRef();
+  const editRef = useRef();
+  const delRef = useRef();
+  const closeDelRef = useRef();
+  const [delId, setDelId] = useState("")
+  const [mntData, setMntData] = useState({
+        _id: "",
+        maintenanceID: "",
+        maintenanceSubject: "",
+        maintenanceDescription: "",
+        maintenanceBudget: 0,
+        maintenanceStatus: "",
+        maintenancePriority: "",
+        __v: 0
+  })
+
+  const [mntList, setMntList] = useState({
+    "success": true,
+    "maintenance": [
+      {
+        "_id": "64301ff245e1048ac23e1a61",
+        "maintenanceID": "ad48e906-72a9-444b-a364-55ff479b660b",
+        "maintenanceSubject": "kkkkkkk",
+        "maintenanceDescription": "jkkshjdasfjndfndsmnfndsbnf",
+        "maintenanceBudget": 20000,
+        "maintenanceStatus": "Ongoing",
+        "maintenancePriority": "High",
+        "__v": 0
+      }
+    ]
+  })
+
+  const updateItem = (mnt) => {
+    editRef.current.click();
+    setMntData(mnt)
+  }
+
+  const deleteItem = (mnt) => {
+    delRef.current.click();
+    setDelId(mnt.maintenanceID);
+    console.log(mnt.maintenanceID)
+  }
+
+  const handleChange = (e) => {
+    setMntData({ ...mntData, [e.target.name]: e.target.value })
+  }
+
+  const handleUpdate = async () => {
+    const response = await updateMaintenance(mntData);
+    if (response.success) {
+      console.log(response);
+      fetchAllMaintenance();
+    } else {
+      console.log(response);
+    }
+
+  }
+
+  const handleClick = () => {
+    closeDelRef.current.click();
+    if (delId) handleDelete();
+  }
+
+  const handleDelete = async () => {
+    console.log(delId)
+    const response = await deleteMaintenance(delId);
+    if (response.success) {
+      console.log(response)
+      fetchAllMaintenance();
+    }
+  }
+
+
+
+  const handleCreate = async () => {
+    const response = await addMaintenance(mntData);
+    if (response.success) {
+      console.log(response)
+    } else {
+      console.log(response);
+    }
+  }
+
+  const fetchAllMaintenance = async () => {
+    const response = await getMaintenance();
+    if (response.success) {
+      console.log(response);
+      setMntList(response);
+    } else {
+      console.log(response);
+    }
+  }
+
+  useEffect(() => {
+    fetchAllMaintenance();
+  }, [])
+
+
+
   return (
     <>
-  <div className="content w-auto h-auto">
+      <div className="content w-auto h-auto">
         <Row>
-        <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick = {()=>{addRef.current.click()}} style={{height:"200px",color: "#7a7a7a",}} /></Col>
-          <Col lg="4" md="4" sm="12">
-            <Card className="card-stats">
-              <CardHeader>
-              <CardTitle tag="h4" className="d-flex flex-row">Maintenance's Title
-              <div className="ml-auto">
-              <FontAwesomeIcon  icon={faPen} size="sm" style={{position:"relative",right:"25px",color: "#e4391b",}} />
-                <FontAwesomeIcon  icon={faTrash} size="sm" style={{color: "#00d6b3",}} />
-              </div>      
-                </CardTitle>
-                
-              </CardHeader>
-              <CardBody>
-                <p className="card-category">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
-                  molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
-                  numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
-                  optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
-                  obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
-                  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
-                  tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
-                  quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos </p>
-              </CardBody>
-              <CardFooter>
-                <hr />
-               <div className="stats d-flex flex-row">
-               <div>
-               <strong>Priority-</strong><FontAwesomeIcon icon={faCircleDot} style={{marginLeft:"10px",marginRight:"3px",color: "#bd0000",}} /> High
-               </div>
-                <div className="ml-auto">
-                dated 4/12/2023
-                </div>
-                
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
+          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick={() => { addRef.current.click() }} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer" }} /></Col>
+          {mntList.maintenance.map((mnt)=>{
+            return <>
+              <MaintenanceItem updateItem={updateItem} deleteItem={deleteItem} mnt={mnt}></MaintenanceItem>
+            </>
+          })}
         </Row>
       </div>
 
       {/* Modal activation buttons */}
-      <button className="btn d-none" ref={addRef} data-target="#editModal" data-toggle="modal">edit</button>
-      {/* <button className="btn d-none"  ref= {delRef} data-target="#deleteModal" data-toggle="modal">delete</button> */}
+      <button className="btn d-none" ref={addRef} data-target="#addModal" data-toggle="modal">edit</button>
+      {/* Update Notice */}
+      <button className="btn d-none" ref={editRef} data-target="#editModal" data-toggle="modal">Edit</button>
+      {/* Delete Notice */}
+      <button className="btn d-none" ref={delRef} data-target="#deleteModal" data-toggle="modal">delete</button>
 
+      {/* Create modal */}
       <div>
-            <div className="modal fade" id="editModal" tabIndex="-1" aria-labelledby="editModal" aria-hidden="true">
-                <div className="modal-dialog custom-modal-box">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Add Maintenance</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div className="modal fade" id="addModal" tabIndex="-1" aria-labelledby="addModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Add Maintenance</h5>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="row modal-body">
+                <div className="log popup-form">
+                  <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="form-box popup-form-box" style={{ height: "auto", width: "100%" }}>
+                      <form className="row g-3" onSubmit={handleCreate}>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Subject*</label>
+                          <input type="text" name="maintenanceSubject" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
                         </div>
-                        <div className="row modal-body">
-                            <div className="log popup-form">
-                                <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <div className="form-box popup-form-box" style={{ height: "auto", width: "100%" }}>
-                                        <form className="row g-3">
-                                            <div className="col-12 mb-4">
-                                                <label htmlFor="subject" className="form-label mb-2">Subject*</label>
-                                                <input type="text" name="maintenanceSubject"  className="form-control" id="inputAddress" required placeholder="" />
-                                            </div>
-                                            <div className="col-12 mb-4">
-                                                <label htmlFor="description" className="form-label mb-2">Description*</label>
-                                                <textarea className="form-control" name="maintenanceDescription"  placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
-                                            </div>
-                                            <div className="col-6 mb-4">
-                                                <label htmlFor="subject" className="form-label mb-2">Budget*</label>
-                                                <input type="text" name="maintenanceBudget"  className="form-control" id="inputAddress" required placeholder="" />
-                                            </div>
-                                            <div className="col-6 mb-4">
-                                                <label htmlFor="subject" className="form-label mb-2">Priority*</label>
-                                                <input type="text" name="maintenancePriority"  className="form-control" id="inputAddress" required placeholder="" />
-                                            </div>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="description" className="form-label mb-2">Description*</label>
+                          <textarea className="form-control" name="maintenanceDescription" onChange={handleChange} placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
+                        </div>
+                        <div className="col-6 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Budget*</label>
+                          <input type="text" name="maintenanceBudget" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
+                        <div className="col-6 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Priority*</label>
+                          <input type="text" name="maintenancePriority" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
 
-                                            <div className="col-12">
-                                                <button ref={closeref} type="button" className="btn" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" className="btn btn-success"> Add Maintenace</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                        <div className="col-12">
+                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button type="submit" className="btn btn-success"> Add Maintenace</button>
                         </div>
+                      </form>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+
+      {/* Update Modal */}
+      <div>
+        <div className="modal fade" id="editModal" tabIndex="-1" aria-labelledby="editModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Update Maintenance</h5>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="row modal-body">
+                <div className="log popup-form">
+                  <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="form-box popup-form-box" style={{ height: "auto", width: "100%" }}>
+                      <form className="row g-3" onSubmit={handleUpdate}>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Subject*</label>
+                          <input type="text" name="maintenanceSubject" value={mntData.maintenanceSubject} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="description" className="form-label mb-2">Description*</label>
+                          <textarea className="form-control" name="maintenanceDescription" value={mntData.maintenanceDescription} onChange={handleChange} placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
+                        </div>
+                        <div className="col-6 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Budget*</label>
+                          <input type="text" name="maintenanceBudget" value={mntData.maintenanceBudget} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
+                        <div className="col-6 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Priority*</label>
+                          <input type="text" name="maintenancePriority" value={mntData.maintenancePriority} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
+
+                        <div className="col-12">
+                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button type="submit" className="btn btn-success"> Update</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Delete modal */}
+      <div>
+        <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Delete Maintenance</h5>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <p>Do you want to delete this maintenance?</p>
+                <button type="submit" className="btn btn-outline-danger" onClick={handleClick}>Yes</button>
+                <button type="button" ref={closeDelRef} className="btn btn-outline-success mx-3" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     </>
   );

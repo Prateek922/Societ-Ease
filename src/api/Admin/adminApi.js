@@ -26,3 +26,20 @@ export async function getResident(residentID){
     return await response.json();
 }
 
+export async function updateResident(residentData){
+
+    const response = await fetch(`${API_URL}/api/admin/updateres`,{
+        method: 'PUT',
+        headers: {
+           'Content-Type': 'application/json',
+           'auth-token': `${adminAuthToken}`
+        },
+        body: JSON.stringify({...residentData})
+    });
+    
+    return await response.json();
+}
+
+
+
+

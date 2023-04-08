@@ -19,18 +19,16 @@ const billSchema = new Schema({
         type:String,
         required: true
     },
+    billTotal:{
+        type:Number,
+        default:0
+    },
     billDue:{
         type: Number,
-        required: true,
         default: 0
     },
     billDate:{
         type: Date,
-        required: true
-    },
-    billAmount:{
-        type: Number,
-        required: true
     },
     billStatus:{
         type: String,

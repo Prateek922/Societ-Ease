@@ -9,6 +9,7 @@ import {
   Col
 } from "reactstrap";
 import {getAllResident} from '../api/Admin/adminApi';
+import User from "components/User";
 
 function UserData() {
   const [residentList, setResidentList] = useState({
@@ -31,7 +32,7 @@ function UserData() {
   });
 
   const fetchAllResident = async ()=>{
-    const response = getAllResident();
+    const response = await getAllResident();
     if(response.success){
       console.log(response);
       setResidentList(response);
@@ -40,12 +41,15 @@ function UserData() {
     }
   }
   
+  const [resi, setResi] = useState(null)
+
   useEffect(() => {
     fetchAllResident();
   }, [])
 
   return (
     <>
+    {resi?<User setResi={setResi} resi={resi} key={resi.residentID} fetchAll = {fetchAllResident}/>:
       <div className="content w-auto h-auto">
         <Row>
           <Col md="12">
@@ -66,7 +70,7 @@ function UserData() {
                   <tbody>
                     {residentList.residentsData.map((resident)=>{
                       return <>
-                        <tr key={resident.residentID}>
+                        <tr key={resident.residentID} onClick = {()=>{setResi(resident)}} style={{cursor:"pointer"}}>
                           <td><a href=""></a>{resident.residentName}</td>
                           <td>{resident.residentRoomNumber}</td>
                           <td>{resident.residentContactNumber}</td>
@@ -82,7 +86,7 @@ function UserData() {
           </Col>
            </Row>
       </div>
-
+    }
       
     </>
   );

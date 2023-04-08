@@ -30,6 +30,10 @@ const maintenanceSchema = new Schema({
     maintenanceDate:{
         type: Date,
     },
-});
+},
+{
+    timestamps:true
+}
+);
 
 module.exports = mongoose.model('maintenance',maintenanceSchema);

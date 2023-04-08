@@ -3,6 +3,8 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { getNotice, updateNotice, deleteNotice, addNotice } from "api/Notice/noticeApi";
@@ -57,9 +59,16 @@ function Notice() {
     setNoticeData({ ...noticeData, [e.target.name]: e.target.value })
   }
 
+  const showToastMessage = (msg) => {
+    toast.success(msg, {
+        position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
   const handleUpdate = async () => {
     const response = await updateNotice(noticeData);
     if (response.success) {
+      showToastMessage("Updated Successfully")
       console.log(response);
       fetchAllNotices();
     } else {
@@ -109,9 +118,10 @@ function Notice() {
 
   return (
     <>
+      <ToastContainer />
       <div className="content w-auto h-auto">
         <Row>
-          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center" ><FontAwesomeIcon icon={faCirclePlus} style={{ height: "200px", color: "#7a7a7a", }} onClick={() => { addRef.current.click(); console.log("hello") }} /></Col>
+          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center" ><FontAwesomeIcon icon={faCirclePlus} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer"}} onClick={() => { addRef.current.click(); console.log("hello") }} /></Col>
           {noticeList.notices.map((notice) => {
             return <>
               <NoticeItem updateItem={updateItem} deleteItem={deleteItem} notice={notice} ></NoticeItem>
