@@ -13,7 +13,7 @@ import { faUser, faCircleDot } from '@fortawesome/free-solid-svg-icons';
 
 function ComplaintItem(props) {
     const {complaintSubject, complaintDescription, createdAt, complaintBy, complaintStatus} = props.complaint;
-    
+    const statusColor = complaintStatus==="Resolved"?"green":"red";
     return (
         <>
             <Col md="6">
@@ -33,10 +33,10 @@ function ComplaintItem(props) {
                                 <hr />
                                 <div className="stats d-flex flex-row">
                                     <div>
-                                        <strong>Status-</strong><FontAwesomeIcon icon={faCircleDot} style={{ marginLeft: "10px", marginRight: "3px", color: "#bd0000", }} /> {complaintStatus}
+                                        <strong>Status-</strong><FontAwesomeIcon icon={faCircleDot} style={{ marginLeft: "10px", marginRight: "3px", color: `${statusColor}`, }} /> {complaintStatus}
                                     </div>
                                     <div className="ml-auto">
-                                        dated {createdAt}
+                                        {createdAt}
                                     </div>
 
                                 </div>
