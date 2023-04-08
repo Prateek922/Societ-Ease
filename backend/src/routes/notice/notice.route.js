@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Resident = require('../../models/resident/Resident.model');
-const Notice = require('../../models/notice/notice.model');
+const Notice = require('../../models/notice/Notice.model');
 const { uuid } = require('uuidv4');
 const fetchuser = require('../../middlewares/fetchuser');
 

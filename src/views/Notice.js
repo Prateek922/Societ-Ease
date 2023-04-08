@@ -121,7 +121,7 @@ function Notice() {
       <ToastContainer />
       <div className="content w-auto h-auto">
         <Row>
-          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center" ><FontAwesomeIcon icon={faCirclePlus} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer"}} onClick={() => { addRef.current.click(); console.log("hello") }} /></Col>
+          <Col lg="3" md="3" sm="12" className="mx-4 d-flex align-items-center justify-content-center" ><FontAwesomeIcon icon={faCirclePlus} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer"}} onClick={() => { addRef.current.click(); console.log("hello") }} /></Col>
           {noticeList.notices.map((notice) => {
             return <>
               <NoticeItem updateItem={updateItem} deleteItem={deleteItem} notice={notice} ></NoticeItem>

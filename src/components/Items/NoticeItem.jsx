@@ -15,7 +15,6 @@ function NoticeItem(props) {
   const { notice, updateItem, deleteItem } = props;
 
   return (
-    <>
       <Col lg="4" md="4" sm="12">
         <Card className="card-stats">
           <CardHeader>
@@ -37,7 +36,6 @@ function NoticeItem(props) {
           </CardFooter>
         </Card>
       </Col>
-    </>
   )
 }
 
