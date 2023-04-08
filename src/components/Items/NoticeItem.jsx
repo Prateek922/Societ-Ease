@@ -17,7 +17,7 @@ function NoticeItem(props) {
   return (
       <Col lg="4" md="4" sm="12">
         <Card className="card-stats">
-          <CardHeader>
+          <CardHeader >
             <CardTitle tag="h4" className="d-flex flex-row">{notice.noticeSubject}
               <div className="ml-auto">
                 <FontAwesomeIcon icon={faPen} onClick={() => { updateItem(notice) }} size="sm" style={{ position: "relative", right: "25px", color: "#00d6b3", cursor: "pointer" }} />

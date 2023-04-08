@@ -114,7 +114,7 @@ function Tables() {
     <>
       <div className="content w-auto h-auto">
         <Row>
-          <Col lg="4" md="4" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick={() => { addRef.current.click() }} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer" }} /></Col>
+          <Col lg="3" md="3" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick={() => { addRef.current.click() }} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer" }} /></Col>
           {mntList.maintenance.map((mnt)=>{
             return <>
               <MaintenanceItem updateItem={updateItem} deleteItem={deleteItem} mnt={mnt}></MaintenanceItem>
