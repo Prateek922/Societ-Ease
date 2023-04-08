@@ -31,7 +31,7 @@ function NoticeItem(props) {
           <CardFooter>
             <hr />
             <div className="stats">
-              <i className="fas fa-sync-alt" />  {notice.createdAt}
+              <i className="fas fa-sync-alt" />{notice.createdAt}
             </div>
           </CardFooter>
         </Card>

@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import { Link } from 'react-router-dom';
 
-function User() {
+function ResidentDashboard() {
     return (
         <>
             <div className="content">
@@ -177,4 +177,4 @@ function User() {
     );
 }
 
-export default User;
+export default ResidentDashboard;
