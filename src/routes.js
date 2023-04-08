@@ -3,7 +3,6 @@ import Resident from "views/UserData.js";
 import Bills from "views/Bills.js";
 import Notice from "views/Notice.js";
 import Maintenance from "views/Maintenance.js";
-import ResidentDashboard from "views/ResidentDashboard";
 
 var routes = [
   {
@@ -40,13 +39,6 @@ var routes = [
     icon: "nc-icon nc-settings",
     component: Maintenance,
     layout: "/admin"
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
-    component: ResidentDashboard,
-    layout: "/resident"
   },
 ];
 export default routes;
