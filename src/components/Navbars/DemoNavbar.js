@@ -1,16 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
-  Nav,
-  NavItem,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   Container,
 } from "reactstrap";
 
@@ -68,7 +60,6 @@ function Header(props) {
     }
   }, [location]);
   return (
-    // add or remove classes depending if we are on full-screen-maps page or not
     <Navbar
       color={
         props.location.pathname.indexOf("full-screen-maps") !== -1
