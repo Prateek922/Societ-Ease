@@ -9,17 +9,35 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { getMyBills, payBill} from "api/Bills/billApi";
+import { getMyBills, payBill, getMyPayments} from "api/Bills/billApi";
 import { Link } from 'react-router-dom';
 
-function Tables() {
+function Bills() {
   const closeref = useRef();
   const addRef = useRef();
-  const [billData, setBillData] = useState({
-    billRoomNumber: "",
+
+  const residentID = JSON.parse(localStorage.getItem('userDetails')).residentID;
+  const [paymentData, setPaymentData] = useState({
+    paymentAmount: 0,
     billType: "",
-    billAmount: ""
+    paymentID: "",
+    residentID: residentID
   })
+
+  const [paymentList, setPaymentList] = useState({
+    "success": true,
+    "payments": [
+      {
+        "_id": "64305f6e419120d7cd4af6d0",
+        "paymentID": "adsadhjjj",
+        "paymentAmount": 1000,
+        "paidBy": "903c6429-9884-48ce-83e7-887630677c14",
+        "paymentStatus": "Successful",
+        "__v": 0
+      },
+    ]
+  })
+
   const [billList, setBillList] = useState({
     "success": true,
     "bills": [
@@ -36,6 +54,7 @@ function Tables() {
       }
     ]
   })
+
   const [catBill, setCatBill] = useState([
     {
       billRoomNumber: "",
@@ -48,9 +67,26 @@ function Tables() {
   ])
 
   const handleChange = (e) => {
-    setBillData({ ...billData, [e.target.name]: e.target.value })
+    setPaymentData({ ...paymentData, [e.target.name]: e.target.value })
   }
 
+  const handleClick = ()=>{
+    addRef.current.click();
+  }
+
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    console.log(paymentData)
+    const response = await payBill(paymentData);
+    if(response.success){
+      console.log(response);
+      closeref.current.click();
+      fetchAllPayments();
+      fetchAllBills();
+    }else{
+      console.log(response)
+    }
+  }
   
 
   const groupBillsByRoomNumber = (bills) => {
@@ -104,10 +140,23 @@ function Tables() {
     } else console.log(response)
   }
 
+  const fetchAllPayments = async ()=>{
+    const response = await getMyPayments(residentID)
+    console.log(response)
+    if(response.success){
+      console.log(response);
+      setPaymentList(response)
+    }else{
+      console.log(response)
+    }
+  }
+
   useEffect(() => {
     fetchAllBills();
+    fetchAllPayments();
   }, [])
 
+  
   return (
     <>
       <div className="content w-  h- ">
@@ -117,7 +166,7 @@ function Tables() {
               <CardHeader>
               <div className="d-flex flex-row">
               <CardTitle tag="h4">Your Bill </CardTitle>
-              <button className="btn btn btn-outline-success ml-auto">Pay Bill</button>
+              <button className="btn btn btn-outline-success ml-auto" onClick = {handleClick}> Pay Bill</button>
               </div>
               </CardHeader>
               <CardBody>
@@ -134,7 +183,7 @@ function Tables() {
                   </thead>
                   <tbody>
                     {catBill.map((bill) => {
-                      return <tr>
+                      return <tr key={bill.billID}>
                         <td>{bill.billRoomNumber}</td>
                         <td>{bill.electricity_Dues ? bill.electricity_Dues : 0}</td>
                         <td>{bill.water_Dues ? bill.water_Dues : 0}</td>
@@ -219,12 +268,12 @@ function Tables() {
                     </tr>
                   </thead>
                   <tbody style={{}}>
-                    {catBill.map((bill) => {
-                      return <tr>
-                        <td>{bill.billRoomNumber}</td>
-                        <td>{bill.electricity_Dues ? bill.electricity_Dues : 0}</td>
-                        <td>{bill.water_Dues ? bill.water_Dues : 0}</td>
-                        <td >{bill.maintenance_Dues ? bill.maintenance_Dues : 0}</td>
+                    {paymentList.payments.map((payment) => {
+                      return <tr key={payment.paymentID}>
+                        <td>{payment.paymentAmount}</td>
+                        <td>{payment.paymentID}</td>
+                        <td>{payment.billType}</td>
+                        <td >{payment.paymentStatus}</td>
                       </tr>
                     })}
 
@@ -236,8 +285,56 @@ function Tables() {
         </Row>
       </div>
 
+      {/* Adding Notice */}
+      <button className="btn d-none" ref={addRef} data-target="#addModal" data-toggle="modal">Add</button>
+
+      {/* Add notice modal */}
+      <div>
+        <div className="modal fade" id="addModal" tabIndex="-1" aria-labelledby="addModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Add Payment Info</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="row modal-body">
+                <div className="log popup-form">
+                  <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className="form-box popup-form-box" style={{ height: "auto", width: "100%" }}>
+                      <form className="row g-3" onSubmit={handleSubmit}>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="subject" className="form-label mb-2">Payment Amount*</label>
+                          <input type="text" name="paymentAmount" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                        </div>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="description" className="form-label mb-2">Transaction ID*</label>
+                          <input type="text" className="form-control" name="paymentID" onChange={handleChange} placeholder="" id="floatingTextarea2" ></input>
+                        </div>
+                        <div className="col-12 mb-4">
+                          <label htmlFor="description" className="form-label mb-2">Bill Type*</label>
+                          <select name="billType" onChange={handleChange} className="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option value="Electricity">Electricity</option>
+                            <option value="Water">Water</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Wifi">Wifi</option>
+                          </select>
+                          {/* <input type="text" className="form-control" name="billType" onChange={handleChange} placeholder="" id="floatingTextarea2"></input> */}
+                        </div>
+                        <div className="col-12">
+                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button type="submit" className="btn btn-success"> Add Payment</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
 
-export default Tables;
+export default Bills;

@@ -56,3 +56,17 @@ export async function payBill(paymentData){
     const json = await response.json();
     return json;
 }
+
+export async function getMyPayments(residentID){
+    const response = await fetch(`${API_URL}/api/bill/getmypayment`,{
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'auth-token': `${residentAuthToken}`
+        },
+        body: JSON.stringify({residentID})
+    });
+
+    const json = await response.json();
+    return json;
+}

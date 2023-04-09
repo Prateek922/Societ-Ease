@@ -17,8 +17,11 @@ function ResidentComplaint() {
   const addRef = useRef();
   const editRef = useRef();
   const delRef = useRef();
+  const resRef = useRef();
   const closeDelRef = useRef();
+  const closeResRef = useRef();
   const [delId, setDelId] = useState("")
+  const [resId, setResId] = useState("")
   const [complaintData, setComplaintData] = useState({
         _id: "",
         complaintID: "",
@@ -56,6 +59,11 @@ function ResidentComplaint() {
   const deleteItem = (complaint) => {
     delRef.current.click();
     setDelId(complaint.complaintID);
+  }
+
+  const resolveItem = (complaint)=>{
+    resRef.current.click();
+    setResId(complaint.complaintID);
   }
 
   const showSuccessMessage = (msg) => {
@@ -107,6 +115,22 @@ function ResidentComplaint() {
     }
   }
 
+  const handleResClick = ()=>{
+    closeResRef.current.click();
+    handleResolve();
+  }
+
+  const handleResolve = async ()=>{
+    const response = await resolveComplaint(resId);
+
+    if(response.success){
+      console.log(response);
+      fetchAllComplaints();
+    }else{
+      console.log(response);
+    }
+  }
+
   const handleCreate = async (e) => {
     e.preventDefault();
     const response = await addComplaint(complaintData);
@@ -149,7 +173,7 @@ function ResidentComplaint() {
           <Col lg="3" md="3" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick={() => { addRef.current.click() }} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer" }} /></Col>
           {complaintList.myComplaints.map((complaint)=>{
             return <>
-              <ResidentComplaintItem updateItem={updateItem} deleteItem={deleteItem} complaint={complaint}></ResidentComplaintItem>
+              <ResidentComplaintItem updateItem={updateItem} deleteItem={deleteItem} resolveItem = {resolveItem} complaint={complaint}></ResidentComplaintItem>
             </>
           })}
         </Row>
@@ -161,6 +185,8 @@ function ResidentComplaint() {
       <button className="btn d-none" ref={editRef} data-target="#editModal" data-toggle="modal">Edit</button>
       {/* Delete Notice */}
       <button className="btn d-none" ref={delRef} data-target="#deleteModal" data-toggle="modal">delete</button>
+      {/* Delete Notice */}
+      <button className="btn d-none" ref={resRef} data-target="#resolveModal" data-toggle="modal">resolve</button>
 
       {/* Create modal */}
       <div>
@@ -265,6 +291,25 @@ function ResidentComplaint() {
                 <p>Do you want to delete this complaint?</p>
                 <button type="submit" className="btn btn-outline-danger" onClick={handleClick}>Yes</button>
                 <button type="button" ref={closeDelRef} className="btn btn-outline-success mx-3" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Resolve modal */}
+      <div>
+        <div className="modal fade" id="resolveModal" tabIndex="-1" aria-labelledby="resolveModal" aria-hidden="true">
+          <div className="modal-dialog custom-modal-box">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Resolve Complaint</h5>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <p>Is your complaint resolved?</p>
+                <button type="submit" className="btn btn-outline-danger" onClick={handleResClick}>Yes</button>
+                <button type="button" ref={closeResRef} className="btn btn-outline-success mx-3" data-dismiss="modal">No</button>
               </div>
             </div>
           </div>

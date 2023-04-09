@@ -11,7 +11,7 @@ import {
   import { faPen ,faTrash,faCircleDot,faCircleCheck} from '@fortawesome/free-solid-svg-icons';
 
 function ResidentComplaintItem(props) {
-    const {updateItem, deleteItem, complaint} = props;
+    const {updateItem, deleteItem, resolveItem,complaint} = props;
     const color =  complaint.complaintPriority=='High' || complaint.complaintPriority=='high'?'red':'green'
     const statusColor = complaint.complaintStatus=='resolved' || complaint.complaintStatus=='Resolved'?'green':'red'
 
@@ -22,7 +22,8 @@ function ResidentComplaintItem(props) {
               <CardHeader>
               <CardTitle tag="h4" className="d-flex flex-row">{complaint.complaintSubject}
               <div className="ml-auto">
-              <FontAwesomeIcon  onClick = {()=>{updateItem(complaint)}} icon={faCircleCheck} size="sm" style={{position:"relative",right:"50px",color: "purple", cursor:"pointer"}} />
+                {complaint.complaintStatus==='Resolved'? <></>:
+                <FontAwesomeIcon  onClick = {()=>{resolveItem(complaint)}} icon={faCircleCheck} size="sm" style={{position:"relative",right:"50px",color: "purple", cursor:"pointer"}} />}
                 <FontAwesomeIcon  onClick = {()=>{updateItem(complaint)}} icon={faPen} size="sm" style={{position:"relative",right:"25px",color: "#00d6b3", cursor:"pointer"}} />
                 <FontAwesomeIcon  onClick = {()=>{deleteItem(complaint)}} icon={faTrash} size="sm" style={{color: "#e4391b", cursor:"pointer"}} />
               </div>      

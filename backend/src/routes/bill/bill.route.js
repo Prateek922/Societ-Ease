@@ -94,13 +94,13 @@ router.post('/paybill',fetchuser,async (req,res)=>{
     try{
         const userType = req.user.userType;
         const billForResident = req.body.residentID;
-        const {paymentAmount, billType, transactionID} = req.body;
+        const {paymentAmount, billType, paymentID} = req.body;
         if(userType!=='resident'){
             return res.status(403).json({success, error:"Permission Denied!"})
         }
 
         const bill = await Payment.create({
-            paymentID: transactionID,
+            paymentID,
             paymentAmount,
             billType,
             paidBy: req.user.id,
@@ -113,6 +113,25 @@ router.post('/paybill',fetchuser,async (req,res)=>{
         })
         success = true;
         return res.status(200).json({success, bill});
+    }catch(err){
+        return res.status(500).json({success,error:err.message,message:"Internal server error"});
+    }
+});
+
+// ROUTE 5: Post get my payents, resident auth
+router.post('/getmypayment',fetchuser,async (req,res)=>{
+    let success = false;
+    
+    try{
+        const userType = req.user.userType;
+
+        if(userType!=='resident'){
+            return res.status(403).json({success, error:"Permission Denied!"})
+        }
+
+        const payments = await Payment.find({paidBy: req.user.id})
+        success = true;
+        return res.status(200).json({success, payments});
     }catch(err){
         return res.status(500).json({success,error:err.message,message:"Internal server error"});
     }
