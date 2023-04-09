@@ -59,19 +59,28 @@ function Notice() {
     setNoticeData({ ...noticeData, [e.target.name]: e.target.value })
   }
 
-  const showToastMessage = (msg) => {
+  const showSuccessMessage = (msg) => {
     toast.success(msg, {
         position: toast.POSITION.TOP_RIGHT
     });
   };
 
-  const handleUpdate = async () => {
+  const showErrorMessage = (msg)=>{
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     const response = await updateNotice(noticeData);
     if (response.success) {
-      showToastMessage("Updated Successfully")
+      closeref.current.click();
+      showSuccessMessage("Updated Successfully")
       console.log(response);
       fetchAllNotices();
     } else {
+      showErrorMessage("An Error occurred")
       console.log(response);
     }
 
@@ -88,15 +97,22 @@ function Notice() {
     if (response.success) {
       console.log(response)
       fetchAllNotices();
+      showSuccessMessage("Deleted Successfully")
+    }else{
+      showErrorMessage("An Error Occurred")
     }
   }
 
-  const handleCreate = async () => {
+  const handleCreate = async (e) => {
+    e.preventDefault();
     const response = await addNotice(noticeData);
     if (response.success) {
+      closeref.current.click();
+      showSuccessMessage("Notice Created!")
       console.log(response)
     } else {
       console.log(response);
+      showErrorMessage("An Error Occurred")
     }
   }
 

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 export default function (props) {
   let [authMode, setAuthMode] = useState("signin")
   const history = useHistory();
-  
+  const {showErrorMessage, showSuccessMessage} = props;
   const changeAuthMode = () => {
     setAuthMode(authMode === "signin" ? "signup" : "signin")
   }
@@ -45,6 +45,7 @@ export default function (props) {
       history.push("/resident/dashboard")
     }else {
       console.log(response)
+      showErrorMessage(response.error)
     }
   }
 
@@ -58,6 +59,7 @@ export default function (props) {
       history.push("/resident/dashboard")
     }else{
       console.log(response)
+      showErrorMessage(response.error)
     }
   }
   

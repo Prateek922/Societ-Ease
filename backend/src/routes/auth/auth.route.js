@@ -57,7 +57,7 @@ router.post('/createadmin',async (req,res)=>{
         //Check whether admin with same email exist
         let admin = await Admin.findOne({adminEmail: req.body.adminEmail});
         if(admin){
-            return res.status(400).json({success,error:"Sorry! this email already exists"});
+            return res.status(400).json({success, error:"Sorry! this email already exists"});
         }
         
         const salt = await bcrypt.genSalt(10);

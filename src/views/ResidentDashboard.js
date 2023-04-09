@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import {
     Card,
     CardBody,
@@ -13,9 +13,7 @@ import { Link } from 'react-router-dom';
 function ResidentDashboard() {
     const residentData = JSON.parse(localStorage.getItem('userDetails'))
     const userType = localStorage.getItem('resident')
-    useEffect(() => {
-        console.log(residentData)
-    }, [])
+    
 
     return (
         <>  
@@ -27,6 +25,7 @@ function ResidentDashboard() {
                             <div className="image">
                                 <img
                                     src={require("assets/img/solid-color-image.png")}
+                                    alt="..."
                                 />
                             </div>
                             <CardBody>

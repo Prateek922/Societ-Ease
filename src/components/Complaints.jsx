@@ -21,7 +21,6 @@ export default function Complaints() {
           },
         ]
       })
-    const [counter, setCounter] = useState(0);
 
     const fetchAllComplaints = async ()=>{
         const response = await getAllComplaints();
@@ -46,7 +45,6 @@ export default function Complaints() {
             <div className="content"><h2 className="title" style={{marginBottom:"55px",marginTop:"60px"}}>Resident's complaints</h2>
                 <Row>
                     {complaintList.complaints.map((complaint)=>{return <>
-                        {/* <p>jjj</p> */}
                         <ComplaintItem complaint = {complaint} key={complaint._id}> </ComplaintItem>
                     </>
                     })}

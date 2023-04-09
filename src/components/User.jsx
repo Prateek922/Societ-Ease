@@ -12,6 +12,8 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { updateResident } from "api/Admin/adminApi";
 
 function User(props) {
@@ -23,15 +25,28 @@ function User(props) {
     setRs({ ...rs, [e.target.name]: e.target.value })
   }
 
+  const showSuccessMessage = (msg) => {
+    toast.success(msg, {
+        position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
+  const showErrorMessage = (msg)=>{
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await updateResident(rs);
     if (response.success) {
       console.log(response);
+      showSuccessMessage("Resident Profile Updated")
       setRs(response.resident)
       setResident(rs)
     } else {
+      showErrorMessage("An Error Occurred")
       console.log(response)
     }
   }
@@ -39,7 +54,9 @@ function User(props) {
 
   return (
     <>
+      
       <div className="content">
+      <ToastContainer></ToastContainer>
         <h6 style={{ cursor: "pointer" }} onClick={() => { setResi(null); fetchAll(); }}> &larr; Back</h6>
         <Row>
           <Col md="4">

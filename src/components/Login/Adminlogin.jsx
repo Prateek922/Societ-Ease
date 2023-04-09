@@ -2,8 +2,9 @@ import React, {useState} from "react"
 import { loginUser } from "api/Auth/authApi";
 import {useHistory} from 'react-router-dom';
 
-export default function Adminlogin() {
+export default function Adminlogin(props) {
   const history = useHistory();
+  const {showErrorMessage, showSuccessMessage} = props;
 
   const [credentials, setCredentials] = useState({
     userType:"admin",
@@ -15,6 +16,8 @@ export default function Adminlogin() {
     setCredentials({...credentials, [e.target.name]:e.target.value});
   }
 
+  
+  
   const handleSubmit = async (e)=>{
     e.preventDefault()
     console.log(credentials)
@@ -25,6 +28,7 @@ export default function Adminlogin() {
       localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))
       history.push("/admin/dashboard")
     }else {
+      showErrorMessage(response.error)
       console.log(response)
     }
     // return false;

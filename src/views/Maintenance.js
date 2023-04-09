@@ -4,6 +4,8 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import MaintenanceItem from "components/Items/MaintenanceItem";
@@ -58,12 +60,28 @@ function Tables() {
     setMntData({ ...mntData, [e.target.name]: e.target.value })
   }
 
-  const handleUpdate = async () => {
+  const showSuccessMessage = (msg) => {
+    toast.success(msg, {
+        position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
+  const showErrorMessage = (msg)=>{
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     const response = await updateMaintenance(mntData);
     if (response.success) {
+      closeref.current.click();
+      showSuccessMessage("Maintenance Updated Successfully")
       console.log(response);
       fetchAllMaintenance();
     } else {
+      showErrorMessage("An Error Occurred")
       console.log(response);
     }
 
@@ -79,17 +97,24 @@ function Tables() {
     const response = await deleteMaintenance(delId);
     if (response.success) {
       console.log(response)
+      showSuccessMessage("Maintenance Deleted Successfully")
       fetchAllMaintenance();
+    }else{
+      showErrorMessage("An Error occurred")
     }
   }
 
 
 
-  const handleCreate = async () => {
+  const handleCreate = async (e) => {
+    e.preventDefault()
     const response = await addMaintenance(mntData);
     if (response.success) {
+      closeref.current.click();
+      showSuccessMessage("Maintenance Created Successfully")
       console.log(response)
     } else {
+      showErrorMessage("An Error Occurred")
       console.log(response);
     }
   }
@@ -116,7 +141,9 @@ function Tables() {
     <>
     {userType==='admin' && userDetails?
     <>
+    <ToastContainer></ToastContainer>
       <div className="content w-auto h-auto">
+        
         <Row>
           <Col lg="3" md="3" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick={() => { addRef.current.click() }} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer" }} /></Col>
           {mntList.maintenance.map((mnt)=>{

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import {useLocation, useHistory } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -10,7 +10,6 @@ import routes from "routes.js";
 
 function Header(props) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
   const location = useLocation();
@@ -23,19 +22,9 @@ function Header(props) {
     history.push("/login");
   }
 
-  const toggle = () => {
-    if (isOpen) {
-      setColor("transparent");
-    } else {
-      setColor("dark");
-    }
-    setIsOpen(!isOpen);
-  };
-  const dropdownToggle = (e) => {
-    setDropdownOpen(!dropdownOpen);
-  };
+
   const getBrand = () => {
-    let brandName = "Default Brand";
+    let brandName = "Societ-Ease";
     routes.map((prop, key) => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
         brandName = prop.name;

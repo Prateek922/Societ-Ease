@@ -8,6 +8,8 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { getAllBills, addBill } from "api/Bills/billApi";
@@ -51,12 +53,27 @@ function Bills() {
     setBillData({ ...billData, [e.target.name]: e.target.value })
   }
 
+  const showSuccessMessage = (msg) => {
+    toast.success(msg, {
+        position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
+  const showErrorMessage = (msg)=>{
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  }
+  
   const handleSubmit = async () => {
     const response = await addBill(billData);
     if (response.success) {
       console.log(response);
+      showSuccessMessage("Bill Created Successfully")
       fetchAllBills();
-    } else console.log(response);
+    } else {
+      showErrorMessage("An Error Occurred")
+    }
   }
 
   const groupBillsByRoomNumber = (bills) => {
@@ -121,6 +138,7 @@ function Bills() {
     <>
     {userType==='admin' && userDetails? 
       <>
+      <ToastContainer></ToastContainer>
       <div className="content w-auto h-auto">
         <Row>
           <Col md="12">

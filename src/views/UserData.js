@@ -76,7 +76,7 @@ function UserData() {
                     {residentList.residentsData.map((resident)=>{
                       return <>
                         <tr key={resident.residentID} onClick = {()=>{setResi(resident)}} style={{cursor:"pointer"}}>
-                          <td><a href=""></a>{resident.residentName}</td>
+                          <td>{resident.residentName}</td>
                           <td>{resident.residentRoomNumber}</td>
                           <td>{resident.residentContactNumber}</td>
                           <td >{resident.residentEmail}</td>
