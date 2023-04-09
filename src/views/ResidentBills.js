@@ -121,7 +121,10 @@ function Tables() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Your Bill </CardTitle>
+              <div className="d-flex flex-row">
+              <CardTitle tag="h4">Your Bill </CardTitle>
+              <button className="btn ml-auto">Pay Bill</button>
+              </div>
               </CardHeader>
               <CardBody>
                 <Table responsive>
@@ -154,7 +157,7 @@ function Tables() {
           </Col>
         </Row>
         <Row>
-          <Col md="3">
+          <Col md="3" style={{height:"100%"}}>
             <Card className="card-stats" style={{height: "auto", }} >
               <CardBody>
                 <Row className="d-flex align-items-center justify-content-center align-text-center">
@@ -173,12 +176,12 @@ function Tables() {
               <CardFooter>
                 <hr />
                 <div className="stats">
-                  Upi id- 8696054228@gmail.com
+                  Upi id- 8696054228@ybl
                 </div>
               </CardFooter>
             </Card>
           </Col>
-          <Col md="3">
+          <Col md="3" style={{height:"100%"}}>
             <Card className="card-stats" style={{height: "auto", }} >
               <CardBody>
                 <Row className="d-flex align-items-center justify-content-center align-text-center">
@@ -207,29 +210,33 @@ function Tables() {
             </Card>
           </Col>
           <Col md="6">
-            <Card className="card-stats" style={{ width: "95%", height: "  20vh", }} >
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Transaction history </CardTitle>
+              </CardHeader>
               <CardBody>
-                <Row>
-                  <Col md="2" xs="5">
-                    <div className="icon-big text-center icon-warning text-warning">
-                      <i className="nc-icon nc-settings" style={{ color: "red" }} />
-                    </div>
-                  </Col>
-                  <Col md="10" xs="7">
-                    <div className="numbers">
-                      <p className="card-category">3 active notices</p>
-                      <Link to="/resident/Maintenance" className="linktag" ><CardTitle tag="p">Maintenance   </CardTitle></Link>
-                      <p />
-                    </div>
-                  </Col>
-                </Row>
+                <Table responsive>
+                  <thead className="text-primary">
+                    <tr>
+                      <th>Transaction Amount</th>
+                      <th>Transaction ID</th>
+                      <th>Bill type</th>
+                      <th>Transaction status</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{}}>
+                    {catBill.map((bill) => {
+                      return <tr>
+                        <td>{bill.billRoomNumber}</td>
+                        <td>{bill.electricity_Dues ? bill.electricity_Dues : 0}</td>
+                        <td>{bill.water_Dues ? bill.water_Dues : 0}</td>
+                        <td >{bill.maintenance_Dues ? bill.maintenance_Dues : 0}</td>
+                      </tr>
+                    })}
+
+                  </tbody>
+                </Table>
               </CardBody>
-              <CardFooter>
-                <hr />
-                <div className="stats">
-                  <Link to="/resident/Maintenance" className="linktag" ><i className="fas fa-sync-alt" /> View all maintenance undergoing </Link>
-                </div>
-              </CardFooter>
             </Card>
           </Col>
         </Row>

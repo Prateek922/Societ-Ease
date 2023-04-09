@@ -1,5 +1,5 @@
 import ResidentDashboard from "views/ResidentDashboard";
-import residentBills from "views/residentBills";
+import ResidentBills from "views/ResidentBills";
 import ResidentComplaints from "views/ResidentComplaints";
 import ResidentMaintenance from "views/ResidentMaintenance";
 import ResidentNotice from "views/ResidentNotice";
@@ -16,7 +16,7 @@ var routes = [
     path: "/Bills",
     name: "View Bills",
     icon: "nc-icon nc-credit-card",
-    component: residentBills,
+    component: ResidentBills,
     layout: "/resident"
   },
   {
