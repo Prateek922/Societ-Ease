@@ -5,7 +5,7 @@ import {
   CardFooter,
   CardTitle,
   Row,
-  Col
+  Col,
 } from "reactstrap";
 import Complaints from "../components/Complaints";
 import { Link } from 'react-router-dom';

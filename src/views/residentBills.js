@@ -1,16 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 import {
   Card,
-  CardHeader,
   CardBody,
+  CardFooter,
   CardTitle,
+  CardHeader,
   Table,
   Row,
   Col
 } from "reactstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { getAllBills, addBill } from "api/Bills/billApi";
+import { Link } from 'react-router-dom';
 
 function Tables() {
   const closeref = useRef();
@@ -116,7 +116,7 @@ function Tables() {
 
   return (
     <>
-      <div className="content w-auto h-auto">
+      <div className="content w-  h- ">
         <Row>
           <Col md="12">
             <Card>
@@ -150,6 +150,86 @@ function Tables() {
                   </tbody>
                 </Table>
               </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="3">
+            <Card className="card-stats" style={{height: "auto", }} >
+              <CardBody>
+                <Row className="d-flex align-items-center justify-content-center align-text-center">
+                  <Col md="12">
+                    <div className="text-center">
+                      <img style={{width:"300px",height:"auto"}} src={require('../assets/img/qr-code.png')} />
+                    </div>
+                  </Col>
+                  <Col md="12" xs="7" className="d-flex justify-content-center">
+                    <div className="numbers">
+                      <CardTitle tag="p"> Pay using UPI </CardTitle>
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <div className="stats">
+                  Upi id- 8696054228@gmail.com
+                </div>
+              </CardFooter>
+            </Card>
+          </Col>
+          <Col md="3">
+            <Card className="card-stats" style={{height: "auto", }} >
+              <CardBody>
+                <Row className="d-flex align-items-center justify-content-center align-text-center">
+                  <Col md="12">
+                    <div className="text-center">
+                      <img style={{width:"260px",height:"auto"}} src={require('../assets/img/bank.webp')} />
+                    </div>
+                  </Col>
+                  <Col md="12" xs="7" className="d-flex justify-content-center">
+                    <div className="numbers">
+                      <CardTitle tag="p"> Pay to Bank account </CardTitle>
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <div className="stats">
+                <strong>Prateek Arora</strong>
+                <br />
+                  Account No- 028501007055
+                  <br />
+                  IFSC- ICIC0000285
+                </div>
+              </CardFooter>
+            </Card>
+          </Col>
+          <Col md="6">
+            <Card className="card-stats" style={{ width: "95%", height: "  20vh", }} >
+              <CardBody>
+                <Row>
+                  <Col md="2" xs="5">
+                    <div className="icon-big text-center icon-warning text-warning">
+                      <i className="nc-icon nc-settings" style={{ color: "red" }} />
+                    </div>
+                  </Col>
+                  <Col md="10" xs="7">
+                    <div className="numbers">
+                      <p className="card-category">3 active notices</p>
+                      <Link to="/resident/Maintenance" className="linktag" ><CardTitle tag="p">Maintenance   </CardTitle></Link>
+                      <p />
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
+              <CardFooter>
+                <hr />
+                <div className="stats">
+                  <Link to="/resident/Maintenance" className="linktag" ><i className="fas fa-sync-alt" /> View all maintenance undergoing </Link>
+                </div>
+              </CardFooter>
             </Card>
           </Col>
         </Row>
