@@ -10,7 +10,7 @@ import {
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
   import { faPen ,faTrash,faCircleDot} from '@fortawesome/free-solid-svg-icons';
 
-export default function residentComplaintItem(props) {
+function MaintenanceItem(props) {
     const {updateItem, deleteItem, mnt} = props;
     
     return (
@@ -46,3 +46,4 @@ export default function residentComplaintItem(props) {
     )
 }
 
+export default MaintenanceItem
