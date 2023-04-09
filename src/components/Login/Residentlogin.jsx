@@ -55,7 +55,7 @@ export default function (props) {
     if(response.success){
       localStorage.setItem('userType', "resident");
       localStorage.setItem('token', response.authToken)
-      localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))
+      localStorage.setItem('userDetails', JSON.stringify(response.userDetails))
       history.push("/resident/dashboard")
     }else{
       console.log(response)

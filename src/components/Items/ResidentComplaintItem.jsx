@@ -7,8 +7,9 @@ import {
     CardTitle,
     Col
   } from "reactstrap";
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-  import { faPen ,faTrash,faCircleDot,faCircleCheck} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen ,faTrash,faCircleDot,faCircleCheck} from '@fortawesome/free-solid-svg-icons';
+const moment = require('moment') 
 
 function ResidentComplaintItem(props) {
     const {updateItem, deleteItem, resolveItem,complaint} = props;

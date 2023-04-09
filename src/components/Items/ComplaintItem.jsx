@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faCircleDot } from '@fortawesome/free-solid-svg-icons';
+const moment = require('moment') 
 
 function ComplaintItem(props) {
     const {complaintSubject, complaintDescription, createdAt, complaintBy, complaintStatus} = props.complaint;
@@ -36,7 +37,7 @@ function ComplaintItem(props) {
                                         <strong>Status-</strong><FontAwesomeIcon icon={faCircleDot} style={{ marginLeft: "10px", marginRight: "3px", color: `${statusColor}`, }} /> {complaintStatus}
                                     </div>
                                     <div className="ml-auto">
-                                        {createdAt}
+                                        {moment(createdAt).format('DD-MM-YYYY')}
                                     </div>
 
                                 </div>

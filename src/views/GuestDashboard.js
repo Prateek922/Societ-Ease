@@ -8,7 +8,7 @@ import {
   Col
 } from "reactstrap";
 import { Link } from 'react-router-dom';
-
+const moment = require('moment') 
 
 function GuestDashboard() {
   const guest = JSON.parse(localStorage.getItem('userDetails'))
@@ -51,7 +51,7 @@ function GuestDashboard() {
                     <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestEmail}</strong></p><br />
                     <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestRoomNumber}</strong></p><br />
                     <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.visitPurpose}</strong></p><br />
-                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestVisitDate}</strong></p><br />
+                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{moment(guest.guestVisitDate).format('DD-MM-YYYY')}</strong></p><br />
                   </Col>
                 </Row>
 

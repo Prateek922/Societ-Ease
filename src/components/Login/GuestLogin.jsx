@@ -56,7 +56,8 @@ export default function (props) {
     if(response.success){
       localStorage.setItem('userType', "guest");
       localStorage.setItem('token', response.authToken)
-      localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))
+      localStorage.setItem('userDetails', JSON.stringify(response.userDetails))
+      console.log(response)
       history.push("/guest/dashboard")
     }else{
       console.log(response)
@@ -162,7 +163,7 @@ export default function (props) {
               name="visitPurpose"
               onChange={handleDataChange}
               className="form-control mt-1"
-              placeholder="Enter security key"
+              placeholder="Purpose...."
             />
           </div>
           <div className="form-group mt-3">

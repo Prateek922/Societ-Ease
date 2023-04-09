@@ -7,8 +7,9 @@ import {
     CardTitle,
     Col
   } from "reactstrap";
-  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-  import { faPen ,faTrash,faCircleDot} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen ,faTrash,faCircleDot} from '@fortawesome/free-solid-svg-icons';
+const moment = require('moment') 
 
 function MaintenanceItem(props) {
     const {updateItem, deleteItem, mnt} = props;
@@ -33,7 +34,7 @@ function MaintenanceItem(props) {
                <strong>Priority-</strong><FontAwesomeIcon icon={faCircleDot} style={{marginLeft:"10px",marginRight:"3px",color: `${priorityColor}`,}} /> {mnt.maintenancePriority}
                </div>
                 <div className="ml-auto">
-                {mnt.createdAt}
+                {moment(mnt.createdAt).format('DD-MM-YYYY')}
                 </div>
                 </div>
               </CardFooter>

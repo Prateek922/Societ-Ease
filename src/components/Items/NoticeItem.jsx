@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-
+const moment = require('moment') 
 
 function NoticeItem(props) {
   const { notice, updateItem, deleteItem } = props;
@@ -31,7 +31,7 @@ function NoticeItem(props) {
           <CardFooter>
             <hr />
             <div className="stats">
-              <i className="fas fa-sync-alt" />{notice.createdAt}
+              <i className="fas fa-sync-alt" />{moment(notice.createdAt).format('DD-MM-YYYY')}
             </div>
           </CardFooter>
         </Card>
