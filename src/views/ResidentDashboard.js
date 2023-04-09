@@ -135,7 +135,7 @@ function ResidentDashboard() {
                                             <Col md="10" xs="7">
                                                 <div className="numbers">
                                                     <p className="card-category">3 active notices</p>
-                                                    <Link to="/resident/Complaints" className="linktag" ><CardTitle tag="p">Bills </CardTitle></Link>
+                                                    <Link to="/resident/Bills" className="linktag" ><CardTitle tag="p">Bills </CardTitle></Link>
                                                     <p />
                                                 </div>
                                             </Col>
@@ -144,7 +144,7 @@ function ResidentDashboard() {
                                     <CardFooter>
                                         <hr />
                                         <div className="stats">
-                                            <Link to="/resident/Complaints" className="linktag" ><i className="fas fa-sync-alt" /> Click to see detailed bill </Link>
+                                            <Link to="/resident/Bills" className="linktag" ><i className="fas fa-sync-alt" /> Click to see detailed bill </Link>
                                         </div>
                                     </CardFooter>
                                 </Card>
