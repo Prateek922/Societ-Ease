@@ -4866,7 +4866,7 @@ License - nucleoapp.com/license/
 
 .sidebar[data-color="white"]:after,
 .off-canvas-sidebar[data-color="white"]:after {
-  background: #FFFFFF;
+  background: black;
 }
 
 .sidebar[data-color="white"] .nav li a,
@@ -4920,7 +4920,7 @@ License - nucleoapp.com/license/
 
 .sidebar[data-color="black"]:after,
 .off-canvas-sidebar[data-color="black"]:after {
-  background: #212120;
+  background: black;
 }
 
 .sidebar[data-active-color="primary"] .nav li.active>a,
@@ -5478,7 +5478,7 @@ License - nucleoapp.com/license/
 .card {
   border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
-  background-color: #FFFFFF;
+  background-color: #fff;
   color: #252422;
   margin-bottom: 20px;
   position: relative;

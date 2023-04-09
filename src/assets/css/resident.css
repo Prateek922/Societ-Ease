@@ -1,0 +1,11 @@
+.main-panel{
+    background-color: #e7f7fb;
+}
+.sidebar[data-color="black"]:after,
+.off-canvas-sidebar[data-color="black"]:after {
+    background: #3A4F7A;
+}
+.card{
+    /* background-color: #EAFDFC; */
+    background-color: white;
+}

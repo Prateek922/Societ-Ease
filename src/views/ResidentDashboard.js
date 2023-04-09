@@ -26,7 +26,7 @@ function ResidentDashboard() {
                         <Card className="card-user" style={{ height: "60vh" }}>
                             <div className="image">
                                 <img
-                                    src={require("assets/img/solid-color-image.png")}
+                                    src={require("assets/img/solid-color-image2.png")}
                                 />
                             </div>
                             <CardBody>
