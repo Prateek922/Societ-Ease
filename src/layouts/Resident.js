@@ -5,7 +5,6 @@ import { Route, Switch, useLocation } from "react-router-dom";
 
 import DemoNavbar from "components/Navbars/ResidentDemoNavbar.js";
 import ResSidebar from "components/Sidebar/ResidentSidebar.js";
-
 import routes from "residentRoutes.js";
 
 var ps;
