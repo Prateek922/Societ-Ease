@@ -9,6 +9,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import AdminLayout from "layouts/Admin.js";
 import ResidentLayout from "layouts/Resident";
 import Login  from "layouts/Login"
+import GuestLayout from "layouts/Guest";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 
@@ -18,6 +19,7 @@ root.render(
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/resident" render={(props) => <ResidentLayout {...props} />} />
+      <Route path="/guest" render={(props) => <GuestLayout {...props} />} />
       <Route path="/login" render={(props) => <Login {...props} />} />
       <Redirect to="/login" />
     </Switch>

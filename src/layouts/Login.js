@@ -4,6 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 
 import Residentlogin from '../components/Login/Residentlogin';
 import Adminlogin from '../components/Login/Adminlogin';
+import GuestLogin from '../components/Login/GuestLogin'
 import "../assets/css/login.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,7 +38,7 @@ function Login() {
         <Adminlogin showErrorMessage={showErrorMessage} showSuccessMessage={showSuccessMessage}/>
       </Tab>
       <Tab eventKey="guest" title="Guest">
-        
+      <GuestLogin showErrorMessage={showErrorMessage} showSuccessMessage={showSuccessMessage}/>
       </Tab>
     </Tabs>
      </div>

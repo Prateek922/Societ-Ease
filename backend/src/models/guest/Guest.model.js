@@ -11,11 +11,15 @@ const guestSchema = new Schema({
         type: String,
         required: true
     },
+    guestEmail:{
+        type: String,
+        required: true
+    },
     guestContactNumber:{
         type: String,
         required: true
     },
-    guestAadhar: {
+    guestRoomNumber:{
         type: String,
         required: true
     },
@@ -25,11 +29,10 @@ const guestSchema = new Schema({
     },
     guestVisitTime:{
         type: Date,
-        required: true
     },
     guestLeavingTime:{
         type: Date,
-        required: true
+
     },
 });
 
