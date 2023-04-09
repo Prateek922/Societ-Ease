@@ -15,13 +15,13 @@ function ResidentComplaintItem(props) {
     const {updateItem, deleteItem, resolveItem,complaint} = props;
     const color =  complaint.complaintPriority=='High' || complaint.complaintPriority=='high'?'red':'green'
     const statusColor = complaint.complaintStatus=='resolved' || complaint.complaintStatus=='Resolved'?'green':'red'
-
+    const complaintSubject = complaint.complaintSubject.length>18?complaint.complaintSubject.slice(0,18)+'...': complaint.complaintSubject;
     return (
         <>
             <Col lg="4" md="4" sm="12">
             <Card className="card-stats">
               <CardHeader>
-              <CardTitle tag="h4" className="d-flex flex-row">{complaint.complaintSubject}
+              <CardTitle tag="h4" className="d-flex flex-row">{complaintSubject}
               <div className="ml-auto">
                 {complaint.complaintStatus==='Resolved'? <></>:
                 <FontAwesomeIcon  onClick = {()=>{resolveItem(complaint)}} icon={faCircleCheck} size="sm" style={{position:"relative",right:"50px",color: "purple", cursor:"pointer"}} />}
