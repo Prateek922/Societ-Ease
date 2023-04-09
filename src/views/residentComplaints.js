@@ -114,7 +114,7 @@ function Tables() {
   return (
     
     <>
-    {userType==='admin' && userDetails?
+    {userType==='resident' && userDetails?
     <>
       <div className="content w-auto h-auto">
         <Row>

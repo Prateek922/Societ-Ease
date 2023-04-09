@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 function ResidentDashboard() {
     const residentData = JSON.parse(localStorage.getItem('userDetails'))
-    const userType = localStorage.getItem('resident')
+    const userType = localStorage.getItem('userType')
     
 
     return (
