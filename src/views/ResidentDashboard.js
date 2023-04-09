@@ -188,7 +188,7 @@ function ResidentDashboard() {
                         <Col md="8" className="d-flex align-items-center">
                             <Row>
                                 <Col md="6">
-                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "  22vh", }} >
+                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "   27vh", }} >
                                         <CardBody>
                                             <Row>
                                                 <Col md="2" xs="5">
@@ -214,7 +214,7 @@ function ResidentDashboard() {
                                     </Card>
                                 </Col>
                                 <Col md="6">
-                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "  22vh", }} >
+                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "   27vh", }} >
                                         <CardBody>
                                             <Row>
                                                 <Col md="2" xs="5">
@@ -240,7 +240,7 @@ function ResidentDashboard() {
                                     </Card>
                                 </Col>
                                 <Col md="6">
-                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "  22vh", }} >
+                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "   27vh", }} >
                                         <CardBody>
                                             <Row>
                                                 <Col md="2" xs="5">
@@ -266,7 +266,7 @@ function ResidentDashboard() {
                                     </Card>
                                 </Col>
                                 <Col md="6">
-                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "  22vh" }} >
+                                    <Card className="card-stats" style={{ margin: "20px auto", width: "85%", height: "   27vh" }} >
                                         <CardBody>
                                             <Row>
                                                 <Col md="2" xs="5">
