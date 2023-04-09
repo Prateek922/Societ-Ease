@@ -157,18 +157,18 @@ function Tables() {
           </Col>
         </Row>
         <Row>
-          <Col md="3" style={{height:"100%"}}>
+          <Col md="3" >
             <Card className="card-stats" style={{height: "auto", }} >
               <CardBody>
                 <Row className="d-flex align-items-center justify-content-center align-text-center">
                   <Col md="12">
                     <div className="text-center">
-                      <img style={{width:"300px",height:"auto"}} src={require('../assets/img/qr-code.png')} />
+                      <img  src={require('../assets/img/qr-code.png')} />
                     </div>
                   </Col>
                   <Col md="12" xs="7" className="d-flex justify-content-center">
-                    <div className="numbers text-center">
-                      <CardTitle tag="p"> Pay using UPI </CardTitle>
+                    <div className="text-center">
+                      <CardTitle tag="h4"> Pay using UPI </CardTitle>
                     </div>
                   </Col>
                 </Row>
@@ -181,18 +181,18 @@ function Tables() {
               </CardFooter>
             </Card>
           </Col>
-          <Col md="3" style={{height:"100%"}}>
+          <Col md="3">
             <Card className="card-stats" style={{height: "auto", }} >
               <CardBody>
                 <Row className="d-flex align-items-center justify-content-center align-text-center">
                   <Col md="12">
                     <div className="text-center">
-                      <img style={{width:"260px",height:"auto"}} src={require('../assets/img/bank.webp')} />
+                      <img  src={require('../assets/img/bank.webp')} />
                     </div>
                   </Col>
                   <Col md="12" xs="7" className="d-flex justify-content-center align-items-center align-text-center">
-                    <div className="numbers text-center">
-                      <CardTitle tag="p"> Pay to Bank account </CardTitle>
+                    <div className="text-center">
+                      <CardTitle className="card-title" tag="h4"> Pay to Bank account </CardTitle>
                     </div>
                   </Col>
                 </Row>
