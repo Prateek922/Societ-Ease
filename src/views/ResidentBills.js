@@ -163,7 +163,7 @@ function Tables() {
                 <Row className="d-flex align-items-center justify-content-center align-text-center">
                   <Col md="12">
                     <div className="text-center">
-                      <img  src={require('../assets/img/qr-code.png')} />
+                      <img style={{height:"270px"}} src={require('../assets/img/qr-code.png')} />
                     </div>
                   </Col>
                   <Col md="12" xs="7" className="d-flex justify-content-center">
@@ -187,7 +187,7 @@ function Tables() {
                 <Row className="d-flex align-items-center justify-content-center align-text-center">
                   <Col md="12">
                     <div className="text-center">
-                      <img  src={require('../assets/img/bank.webp')} />
+                      <img style={{height:"250px"}} src={require('../assets/img/bank.webp')} />
                     </div>
                   </Col>
                   <Col md="12" xs="7" className="d-flex justify-content-center align-items-center align-text-center">
