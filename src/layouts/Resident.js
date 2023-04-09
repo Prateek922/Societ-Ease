@@ -1,5 +1,5 @@
 
-import React from "react";
+import React,{useEffect} from "react";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, useLocation } from "react-router-dom";
 import DemoNavbar from "components/Navbars/ResidentDemoNavbar.js";
@@ -8,6 +8,7 @@ import routes from "residentRoutes.js";
 var ps;
 
 function Dashboard(props) {
+
   const [backgroundColor] = React.useState("black");
   const [activeColor] = React.useState("info");
   const mainPanel = React.useRef();
@@ -28,6 +29,9 @@ function Dashboard(props) {
     mainPanel.current.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [location]);
+
+
+
 
   return (
     <div className="wrapper">

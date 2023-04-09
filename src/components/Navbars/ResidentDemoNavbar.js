@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import {
   Navbar,
@@ -8,7 +8,9 @@ import {
 
 import routes from "residentRoutes.js";
 
+
 function Header(props) {
+ 
   const [isOpen, setIsOpen] = React.useState(false);
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
