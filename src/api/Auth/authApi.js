@@ -28,3 +28,16 @@ export async function createResident(credentials){
     const json = await response.json();
     return json;
 }
+
+export async function createGuest(credentials){
+    const response = await fetch(`${API_URL}/api/auth/createguest`,{
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({...credentials})
+    });
+
+    const json = await response.json();
+    return json;
+}

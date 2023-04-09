@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const Resident  = require('../../models/resident/Resident.model');
 const Admin = require('../../models/admin/Admin.model');
 const Auth = require('../../models/auth/LoginInfo.model');
+const Guest = require('../../models/guest/Guest.model');
 const { uuid } = require('uuidv4');
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
@@ -40,6 +41,7 @@ router.post('/login',async (req,res)=>{
         if(authToken){
             if(user.userType === "resident") userDetails = await Resident.find({residentID: user.userID});
             else if(user.userType === "admin") userDetails = await Admin.find({adminID: user.userID});
+            else if(user.userType === "guest") userDetails = await Guest.find({guestID: user.userID});
         }
         success = true;
         return res.status(200).json({success,authToken,userDetails});
@@ -143,6 +145,53 @@ router.post('/createresident',async (req,res)=>{
             }
         }
         const userDetails = resident;
+        const authToken = jwt.sign(data,JWT_SECRET_KEY);
+        success = true;
+        return res.status(200).json({success,authToken,userDetails});
+
+    }catch(err){
+        return res.status(500).json({success,error:err.message,message:"Internal server error"});
+    }
+});
+
+//ROUTE 4: POST Guest Register API
+router.post('/createguest',async (req,res)=>{
+
+    let success = false;
+
+    try{
+        
+        const salt = await bcrypt.genSalt(10);
+        const hashedPass = await bcrypt.hash(req.body.password,salt);
+        const guestID = uuid();
+        const guest = await Guest.create({
+            guestID,
+            guestName: req.body.guestName,
+            guestEmail:req.body.guestEmail,
+            guestContactNumber: req.body.guestContactNumber,
+            guestRoomNumber: req.body.guestRoomNumber,
+            visitPurpose: req.body.visitPurpose,
+            guestVisitDate: req.body.guestVisitDate
+        });
+
+        const guestUser = await Auth.create({
+            userType: "guest",
+            email: req.body.guestEmail,
+            password: hashedPass,
+            userID: guestID
+        })
+
+        let data;
+        if(guestUser){
+            data = {
+                user:{
+                    id: guestUser.userID,
+                    email: guestUser.email,
+                    userType: guestUser.userType
+                }
+            }
+        }
+        const userDetails = guest;
         const authToken = jwt.sign(data,JWT_SECRET_KEY);
         success = true;
         return res.status(200).json({success,authToken,userDetails});

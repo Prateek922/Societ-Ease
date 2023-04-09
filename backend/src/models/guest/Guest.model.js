@@ -23,16 +23,15 @@ const guestSchema = new Schema({
         type: String,
         required: true
     },
-    guestPurpose:{
+    visitPurpose:{
         type: String,
         required: true
     },
-    guestVisitTime:{
+    guestVisitDate:{
         type: Date,
     },
     guestLeavingTime:{
         type: Date,
-
     },
 });
 

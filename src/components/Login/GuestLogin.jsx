@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { loginUser, createResident } from "api/Auth/authApi";
+import { loginUser, createGuest } from "api/Auth/authApi";
 import { useHistory } from "react-router-dom";
 
 export default function (props) {
@@ -16,14 +16,14 @@ export default function (props) {
     password:""
   })
 
-  const [resData, setResData] = useState({
-    residentName:"",
-    residentEmail:"",
-    residentContactNumber:"",
-    residentAadhar:"",
+  const [guestData, setGuestData] = useState({
+    guestName:"",
+    guestEmail:"",
+    guestContactNumber:"",
     password:"",
-    residentRoomNumber:0,
-    securityKey:""
+    guestRoomNumber:0,
+    visitPurpose:"",
+    guestVisitDate:""
   })
 
   const handleChange = (e)=>{
@@ -32,17 +32,18 @@ export default function (props) {
 
   
   const handleDataChange = (e)=>{
-    setResData({...resData, [e.target.name]:e.target.value});
+    setGuestData({...guestData, [e.target.name]:e.target.value});
   }
 
   const handleLogin = async (e)=>{
     e.preventDefault()
     const response = await loginUser(credentials);
+    console.log(response)
     if(response.success){
-      localStorage.setItem('userType', "resident");
+      localStorage.setItem('userType', "guest");
       localStorage.setItem('token', response.authToken)
       localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]));
-      history.push("/resident/dashboard")
+      history.push("/guest/dashboard")
     }else {
       console.log(response)
       showErrorMessage(response.error)
@@ -51,12 +52,12 @@ export default function (props) {
 
   const handleSignup = async (e)=>{
     e.preventDefault();
-    const response = await createResident(resData);
+    const response = await createGuest(guestData);
     if(response.success){
-      localStorage.setItem('userType', "resident");
+      localStorage.setItem('userType', "guest");
       localStorage.setItem('token', response.authToken)
       localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))
-      history.push("/resident/dashboard")
+      history.push("/guest/dashboard")
     }else{
       console.log(response)
       showErrorMessage(response.error)
@@ -118,7 +119,7 @@ export default function (props) {
             <label>Name</label>
             <input
               type="text"
-              name="residentName"
+              name="guestName"
               onChange={handleDataChange}
               className="form-control mt-1"
               placeholder="Your name"
@@ -128,7 +129,7 @@ export default function (props) {
             <label>Email address</label>
             <input
               type="email"
-              name="residentEmail"
+              name="guestEmail"
               onChange={handleDataChange}
               className="form-control mt-1"
               placeholder="Email Address"
@@ -138,7 +139,7 @@ export default function (props) {
             <label>Contact Number</label>
             <input
               type="text"
-              name="residentContactNumber"
+              name="guestContactNumber"
               onChange={handleDataChange}
               className="form-control mt-1"
               placeholder="Contact no."
@@ -148,7 +149,7 @@ export default function (props) {
             <label>Room no.</label>
             <input
               type="text"
-              name="residentRoomNumber"
+              name="guestRoomNumber"
               onChange={handleDataChange}
               className="form-control mt-1"
               placeholder="Room no."
@@ -158,7 +159,7 @@ export default function (props) {
             <label>Purpose</label>
             <input
               type="text"
-              name="securityKey"
+              name="visitPurpose"
               onChange={handleDataChange}
               className="form-control mt-1"
               placeholder="Enter security key"
@@ -168,6 +169,16 @@ export default function (props) {
             <label>Visit Date</label>
             <input
               type="date"
+              name="guestVisitDate"
+              onChange={handleDataChange}
+              className="form-control mt-1"
+              placeholder="Password"
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Password</label>
+            <input
+              type="password"
               name="password"
               onChange={handleDataChange}
               className="form-control mt-1"
