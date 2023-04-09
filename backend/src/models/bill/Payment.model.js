@@ -15,6 +15,10 @@ const paymentSchema = new Schema({
         type: String,
         required: true
     },
+    billType: {
+        type:String,
+        required: true
+    },
     paymentDate: {
         type: Date,
         // required: true

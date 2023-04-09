@@ -9,7 +9,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import { getAllBills, addBill } from "api/Bills/billApi";
+import { getMyBills, payBill} from "api/Bills/billApi";
 import { Link } from 'react-router-dom';
 
 function Tables() {
@@ -51,13 +51,7 @@ function Tables() {
     setBillData({ ...billData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async () => {
-    const response = await addBill(billData);
-    if (response.success) {
-      console.log(response);
-      fetchAllBills();
-    } else console.log(response);
-  }
+  
 
   const groupBillsByRoomNumber = (bills) => {
     const mp = new Map();
@@ -103,7 +97,7 @@ function Tables() {
   }
 
   const fetchAllBills = async () => {
-    const response = await getAllBills();
+    const response = await getMyBills();
     if (response.success) {
       console.log(response)
       groupBillsByRoomNumber(response.bills)

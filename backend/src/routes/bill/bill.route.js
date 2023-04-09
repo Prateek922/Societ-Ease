@@ -73,8 +73,9 @@ router.post('/getmybill',fetchuser,async (req,res)=>{
     try{
         const userType = req.user.userType;
         const billForResident = req.user.id || req.body.residentID;
+        const user = req.user
 
-        if(!((userType === 'admin') || (userType === 'resident' && user.userID === billForResident))){
+        if(!((userType === 'admin') || (userType === 'resident' && user.id === billForResident))){
             return res.status(403).json({success, error:"Permission Denied!"})
         }
 
@@ -101,6 +102,7 @@ router.post('/paybill',fetchuser,async (req,res)=>{
         const bill = await Payment.create({
             paymentID: transactionID,
             paymentAmount,
+            billType,
             paidBy: req.user.id,
             paymentStatus: "Successful"
         }).then(async ()=>{
