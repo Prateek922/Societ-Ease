@@ -13,7 +13,27 @@ var ps;
 function Dashboard(props) {
   React.useEffect(() => {
     if (location.pathname === '/admin/dashboard')
-    require('../assets/css/resident.css')
+      require('../assets/css/resident.css')
+    console.log(location.pathname)
+  }, [location])
+  React.useEffect(() => {
+    if (location.pathname === '/admin/UserData')
+      require('../assets/css/resident.css')
+    console.log(location.pathname)
+  }, [location])
+  React.useEffect(() => {
+    if (location.pathname === '/admin/Bills')
+      require('../assets/css/resident.css')
+    console.log(location.pathname)
+  }, [location])
+  React.useEffect(() => {
+    if (location.pathname === '/admin/Notices')
+      require('../assets/css/resident.css')
+    console.log(location.pathname)
+  }, [location])
+  React.useEffect(() => {
+    if (location.pathname === '/admin/Maintenance')
+      require('../assets/css/resident.css')
     console.log(location.pathname)
   }, [location])
   const [backgroundColor] = React.useState("black");

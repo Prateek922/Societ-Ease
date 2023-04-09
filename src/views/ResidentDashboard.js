@@ -171,12 +171,12 @@ function ResidentDashboard() {
                                             <Col className="ml-auto mr-auto" lg="4" md="6" xs="6">
                                                 <h5>
                                                     {complaintCount}<br />
-                                                    <small>Complaints</small>
+                                                    <small>Active complaints</small>
                                                 </h5>
                                             </Col>
                                             <Col className="mr-auto" lg="3">
                                                 <h5>
-                                                    {catBill[0].total_Dues} <br />
+                                                    {catBill[0].total_Dues} Rs <br />
                                                     <small>Pending bill</small>
                                                 </h5>
                                             </Col>
