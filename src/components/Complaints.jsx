@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Row} from "reactstrap";
 import { getAllComplaints } from "api/Complaint/complaintApi";
-import ComplaintItem from "./Items/ComplaintItem";
+import ComplaintItem from "./Items/residentComplaintItem";
 
 export default function Complaints() {
     const [complaintList, setComplaintList] = useState({

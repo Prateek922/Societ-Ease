@@ -108,9 +108,13 @@ function Tables() {
     fetchAllMaintenance();
   }, [])
 
-
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'))
+  const userType = localStorage.getItem('userType')
 
   return (
+    
+    <>
+    {userType==='admin' && userDetails?
     <>
       <div className="content w-auto h-auto">
         <Row>
@@ -238,8 +242,8 @@ function Tables() {
           </div>
         </div>
       </div>
-
-
+      </>
+  : <><div className="content"> Not Authorised</div></>}
     </>
   );
 }
