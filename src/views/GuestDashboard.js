@@ -14,8 +14,8 @@ function GuestDashboard() {
     return (
         <>  
             <div className="content">
-                <Row>
-                    <Col md="10">
+                <Row >
+                    <Col md="9">
                         <Card className="card-user" >
                             <div className="image" style={{height:"220px",width:"100%"}}>
                                 <img style={{width:"100%",height:"auto",borderRadius:"5px"}}
@@ -24,13 +24,13 @@ function GuestDashboard() {
                                 />
                             </div>
                             <CardBody>
-                                <div className="author">
+                                <div className="author" style={{ width: "auto", height: "auto",position:"absolute",right:"5%" }}>
                                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
                                         <img
                                             alt="..."
                                             className="avatar border-gray"
                                             src={require("assets/img/logo-profile.png")}
-                                            style={{ width: "250px", height: "auto"}}
+                                            style={{width:"55%",height: "auto",borderRadius:"0px",border:"10px solid black",}}
                                         />
                                         <h3 className="title">Prateek Arora</h3>
                                     </a>
