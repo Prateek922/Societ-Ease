@@ -13,7 +13,7 @@ import {
 function MaintenanceItem(props) {
     const {updateItem, deleteItem, mnt} = props;
     const priorityColor = mnt.maintenancePriority=="High"?'red':'green'
-    const mntSubject = mnt.maintenanceSubject.length>15?mnt.maintenanceSubject.slice(0,15)+'...': mnt.maintenanceSubject;
+    const mntSubject = mnt.maintenanceSubject.length>23?mnt.maintenanceSubject.slice(0,23)+'...': mnt.maintenanceSubject;
     return (
         <>
             <Col lg="4" md="4" sm="12">

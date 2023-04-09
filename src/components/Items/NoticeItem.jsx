@@ -13,7 +13,7 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 function NoticeItem(props) {
   const { notice, updateItem, deleteItem } = props;
-  const noticeSubject = notice.noticeSubject.length>15?notice.noticeSubject.slice(0,15)+'...': notice.noticeSubject;
+  const noticeSubject = notice.noticeSubject.length>23?notice.noticeSubject.slice(0,23)+'...': notice.noticeSubject;
   return (
       <Col lg="4" md="4" sm="12">
         <Card className="card-stats">

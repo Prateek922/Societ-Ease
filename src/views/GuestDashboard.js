@@ -11,8 +11,11 @@ import { Link } from 'react-router-dom';
 
 
 function GuestDashboard() {
+  const guest = JSON.parse(localStorage.getItem('userDetails'))
+  const userType = localStorage.getItem('userType')
   return (
     <>
+    {userType==='guest' && guest? 
       <div className="content">
         <Row >
           <Col md="11" style={{ margin: "auto" }}>
@@ -32,7 +35,7 @@ function GuestDashboard() {
                       src={require("assets/img/logo-profile.png")}
                       style={{ width: "55%", height: "auto", borderRadius: "2px", border: "6px solid #4e4e4e", }}
                     />
-                    <h3 className="title">Prateek Arora</h3>
+                    <h3 className="title">{guest.guestName}</h3>
                   </a>
                 </div>
                 <Row style={{ margin: "20px 10px", fontSize: "1rem" }}>
@@ -44,11 +47,11 @@ function GuestDashboard() {
                     <h6 className="card-title" style={{ margin: "0px" }}>In Date:</h6><br />
                   </Col>
                   <Col lg="6" className="text-left">
-                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>8696054228</strong></p><br />
-                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>prateeka922@gmail.com</strong></p><br />
-                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>620</strong></p><br />
-                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>Stay</strong></p><br />
-                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>14 december 2023</strong></p><br />
+                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestContactNumber}</strong></p><br />
+                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestEmail}</strong></p><br />
+                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestRoomNumber}</strong></p><br />
+                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.visitPurpose}</strong></p><br />
+                    <p className="description" style={{ margin: "0px", lineHeight: "1.2rem" }}><strong>{guest.guestVisitDate}</strong></p><br />
                   </Col>
                 </Row>
 
@@ -65,7 +68,7 @@ function GuestDashboard() {
 
         </Row>
       </div>
-
+      : <> <div className="content"> Not Authorised</div></>}
     </>
   );
 }
