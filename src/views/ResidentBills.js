@@ -167,7 +167,7 @@ function Tables() {
                     </div>
                   </Col>
                   <Col md="12" xs="7" className="d-flex justify-content-center">
-                    <div className="numbers">
+                    <div className="numbers text-center">
                       <CardTitle tag="p"> Pay using UPI </CardTitle>
                     </div>
                   </Col>
@@ -190,8 +190,8 @@ function Tables() {
                       <img style={{width:"260px",height:"auto"}} src={require('../assets/img/bank.webp')} />
                     </div>
                   </Col>
-                  <Col md="12" xs="7" className="d-flex justify-content-center">
-                    <div className="numbers">
+                  <Col md="12" xs="7" className="d-flex justify-content-center align-items-center align-text-center">
+                    <div className="numbers text-center">
                       <CardTitle tag="p"> Pay to Bank account </CardTitle>
                     </div>
                   </Col>
