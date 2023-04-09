@@ -86,7 +86,7 @@ function Header(props) {
               <span className="navbar-toggler-bar bar3" />
             </button>
           </div>
-          <NavbarBrand href="/">{getBrand()}</NavbarBrand>
+          <NavbarBrand>{getBrand()}</NavbarBrand>
         </div>
        <button className="btn" style={{borderRadius:"6px"}} onClick = {handleLogout}>Logout</button>
       </Container>
