@@ -117,7 +117,7 @@ function Tables() {
               <CardHeader>
               <div className="d-flex flex-row">
               <CardTitle tag="h4">Your Bill </CardTitle>
-              <button className="btn ml-auto">Pay Bill</button>
+              <button className="btn btn btn-outline-success ml-auto">Pay Bill</button>
               </div>
               </CardHeader>
               <CardBody>
