@@ -11,14 +11,15 @@ import { Link } from 'react-router-dom';
 
 
 function ResidentDashboard() {
-    const residentData = localStorage.getItem('userDetails')
+    const residentData = JSON.parse(localStorage.getItem('userDetails'))
+    const userType = localStorage.getItem('resident')
     useEffect(() => {
         console.log(residentData)
     }, [])
 
     return (
         <>  
-        {residentData? 
+        {userType==='resident' && residentData? 
             <div className="content">
                 <Row>
                     <Col md="4">
@@ -180,7 +181,7 @@ function ResidentDashboard() {
 
                 </Row>
             </div>
-            : <> Not Authorised </>}
+            : <div className="content"> Not Authorised </div>}
         </>
     );
 }

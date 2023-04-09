@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { getAllBills, addBill } from "api/Bills/billApi";
 
-function Tables() {
+function Bills() {
   const closeref = useRef();
   const addRef = useRef();
   const [billData, setBillData] = useState({
@@ -114,8 +114,13 @@ function Tables() {
     fetchAllBills();
   }, [])
 
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'))
+  const userType = localStorage.getItem('userType')
+
   return (
     <>
+    {userType==='admin' && userDetails? 
+      <>
       <div className="content w-auto h-auto">
         <Row>
           <Col md="12">
@@ -205,10 +210,10 @@ function Tables() {
           </div>
         </div>
       </div>
-
-
+        </>
+          :<><div className="content">Not Authorised</div></>}
     </>
   );
 }
 
-export default Tables;
+export default Bills;

@@ -22,7 +22,7 @@ export default function Adminlogin() {
     if(response.success){
       localStorage.setItem('userType', "admin");
       localStorage.setItem('token', response.authToken)
-      localStorage.setItem('userDetails', response.userDetails[0])
+      localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))
       history.push("/admin/dashboard")
     }else {
       console.log(response)

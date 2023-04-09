@@ -12,7 +12,6 @@ export async function loginUser(credentials){
     });
 
     const res = await response.json();
-    console.log(res);
     return res;
 }
 

@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Card,
@@ -14,9 +13,13 @@ import "../assets/css/paper-dashboard.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
+
 function Dashboard() {
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'))
+  const userType = localStorage.getItem('userType')
   return (
     <>
+    {userType==='admin' && userDetails?
       <div className="content">
         <Row>
           <Col lg="4" md="4" sm="12">
@@ -99,7 +102,9 @@ function Dashboard() {
           </Col>
         </Row>
         <Complaints />
-      </div>
+      </div>:
+      <div className="content">Not Authorised</div>
+      }
 
     </>
   );

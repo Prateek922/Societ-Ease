@@ -41,7 +41,7 @@ export default function (props) {
     if(response.success){
       localStorage.setItem('userType', "resident");
       localStorage.setItem('token', response.authToken)
-      localStorage.setItem('userDetails', response.userDetails[0])
+      localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]));
       history.push("/resident/dashboard")
     }else {
       console.log(response)
@@ -54,7 +54,7 @@ export default function (props) {
     if(response.success){
       localStorage.setItem('userType', "resident");
       localStorage.setItem('token', response.authToken)
-      localStorage.setItem('userDetails', response.userDetails[0])
+      localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))
       history.push("/resident/dashboard")
     }else{
       console.log(response)

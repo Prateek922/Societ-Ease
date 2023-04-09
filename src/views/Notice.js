@@ -91,8 +91,6 @@ function Notice() {
     }
   }
 
-
-
   const handleCreate = async () => {
     const response = await addNotice(noticeData);
     if (response.success) {
@@ -116,8 +114,13 @@ function Notice() {
     fetchAllNotices();
   }, [])
 
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'))
+  const userType = localStorage.getItem('userType')
+
   return (
     <>
+    {userType==='admin' && userDetails? 
+      <>
       <ToastContainer />
       <div className="content w-auto h-auto">
         <Row>
@@ -230,6 +233,8 @@ function Notice() {
           </div>
         </div>
       </div>
+      </>
+      : <div className="content"> Not Authorised</div>}
     </>
   );
 }

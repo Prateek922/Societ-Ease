@@ -47,7 +47,12 @@ function UserData() {
     fetchAllResident();
   }, [])
 
+  const userDetails = JSON.parse(localStorage.getItem('userDetails'))
+  const userType = localStorage.getItem('userType')
+
   return (
+    <>
+    {userType==='admin' && userDetails?
     <>
     {resi?<User setResi={setResi} resi={resi} key={resi.residentID} fetchAll = {fetchAllResident}/>:
       <div className="content w-auto h-auto">
@@ -87,7 +92,8 @@ function UserData() {
            </Row>
       </div>
     }
-      
+    </>
+    : <> <div className="content"> Not Authorised</div></>}
     </>
   );
 }
