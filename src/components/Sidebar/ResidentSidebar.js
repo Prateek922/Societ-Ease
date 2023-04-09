@@ -6,7 +6,7 @@ import { Nav } from "reactstrap";
 import PerfectScrollbar from "perfect-scrollbar";
 
 import logo from "../../assets/img/favicon.png";
-import "../../assets/css/resident.css"
+// import "../../assets/css/resident.css"
 
 var ps;
 

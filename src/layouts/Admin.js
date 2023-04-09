@@ -11,6 +11,11 @@ import routes from "routes.js";
 var ps;
 
 function Dashboard(props) {
+  React.useEffect(() => {
+    if (location.pathname === '/admin/dashboard')
+    require('../assets/css/resident.css')
+    console.log(location.pathname)
+  }, [location])
   const [backgroundColor] = React.useState("black");
   const [activeColor] = React.useState("info");
   const mainPanel = React.useRef();

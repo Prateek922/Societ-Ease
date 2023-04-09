@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
@@ -11,7 +11,9 @@ import ResidentLayout from "layouts/Resident";
 import Login  from "layouts/Login"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+
 root.render(
+
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
