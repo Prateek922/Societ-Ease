@@ -24,7 +24,7 @@ export default function Complaints() {
 
     const fetchAllComplaints = async ()=>{
         const response = await getAllComplaints();
-        
+        console.log(localStorage.getItem('token'))
         if(response.success){
             setComplaintList(response);
             console.log(response)

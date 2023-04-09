@@ -23,6 +23,7 @@ export default function Adminlogin(props) {
     console.log(credentials)
     const response = await loginUser(credentials);
     if(response.success){
+      console.log(response)
       localStorage.setItem('userType', "admin");
       localStorage.setItem('token', response.authToken)
       localStorage.setItem('userDetails', JSON.stringify(response.userDetails[0]))

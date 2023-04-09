@@ -180,7 +180,6 @@ function Notice() {
                           <label htmlFor="description" className="form-label mb-2">Description*</label>
                           <textarea className="form-control" name="noticeDescription" onChange={handleChange} placeholder="Body of notice" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
                         </div>
-
                         <div className="col-12">
                           <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
                           <button type="submit" className="btn btn-success"> Add Notice</button>

@@ -4,66 +4,86 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import MaintenanceItem from "components/Items/MaintenanceItem";
-import { getMaintenance, updateMaintenance, deleteMaintenance, addMaintenance } from "api/Maintenance/maintenanceApi";
+import ResidentComplaintItem from "components/Items/ResidentComplaintItem";
+import { getMyComplaints} from "api/Complaint/complaintApi";
+import { addComplaint, updateComplaint, deleteComplaint, resolveComplaint } from "api/Complaint/complaintApi";
 
-function Tables() {
+function ResidentComplaint() {
   const closeref = useRef();
   const addRef = useRef();
   const editRef = useRef();
   const delRef = useRef();
   const closeDelRef = useRef();
   const [delId, setDelId] = useState("")
-  const [mntData, setMntData] = useState({
+  const [complaintData, setComplaintData] = useState({
         _id: "",
-        maintenanceID: "",
-        maintenanceSubject: "",
-        maintenanceDescription: "",
-        maintenanceBudget: 0,
-        maintenanceStatus: "",
-        maintenancePriority: "",
+        complaintID: "",
+        complaintSubject: "",
+        complaintDescription: "",
+        complaintPriority: "",
+        complaintStatus:"",
         __v: 0
   })
 
-  const [mntList, setMntList] = useState({
+  const [complaintList, setComplaintList] = useState({
     "success": true,
-    "maintenance": [
+    "myComplaints": [
       {
-        "_id": "64301ff245e1048ac23e1a61",
-        "maintenanceID": "ad48e906-72a9-444b-a364-55ff479b660b",
-        "maintenanceSubject": "kkkkkkk",
-        "maintenanceDescription": "jkkshjdasfjndfndsmnfndsbnf",
-        "maintenanceBudget": 20000,
-        "maintenanceStatus": "Ongoing",
-        "maintenancePriority": "High",
+        "_id": "64328d93b5cf1efc4368a3bb",
+        "complaintID": "a599f6c6-2759-47b3-98b0-c36219379c46",
+        "residentID": "903c6429-9884-48ce-83e7-887630677c14",
+        "complaintSubject": "dfdsf",
+        "complaintDescription": "uuuuuuuuuuuuuuiiiiiiiiiiggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+        "complaintBy": "Prashant Kumar singh Room No: 101",
+        "complaintStatus": "Not resolved",
+        "complaintPriority": "High",
+        "createdAt": "2023-04-09T10:04:03.210Z",
+        "updatedAt": "2023-04-09T10:04:03.210Z",
         "__v": 0
       }
     ]
   })
 
-  const updateItem = (mnt) => {
+  const updateItem = (complaint) => {
     editRef.current.click();
-    setMntData(mnt)
+    setComplaintData(complaint)
   }
 
-  const deleteItem = (mnt) => {
+  const deleteItem = (complaint) => {
     delRef.current.click();
-    setDelId(mnt.maintenanceID);
-    console.log(mnt.maintenanceID)
+    setDelId(complaint.complaintID);
+  }
+
+  const showSuccessMessage = (msg) => {
+    toast.success(msg, {
+        position: toast.POSITION.TOP_RIGHT
+    });
+  };
+
+  const showErrorMessage = (msg)=>{
+    toast.error(msg, {
+      position: toast.POSITION.TOP_RIGHT
+    });
   }
 
   const handleChange = (e) => {
-    setMntData({ ...mntData, [e.target.name]: e.target.value })
+    setComplaintData({ ...complaintData, [e.target.name]: e.target.value })
   }
 
-  const handleUpdate = async () => {
-    const response = await updateMaintenance(mntData);
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const response = await updateComplaint(complaintData);
     if (response.success) {
       console.log(response);
-      fetchAllMaintenance();
+      closeref.current.click();
+      showSuccessMessage("Complaint Updated Successfully")
+      fetchAllComplaints();
     } else {
+      showErrorMessage("An Error occurred")
       console.log(response);
     }
 
@@ -74,38 +94,45 @@ function Tables() {
     if (delId) handleDelete();
   }
 
-  const handleDelete = async () => {
+  const handleDelete = async (e) => {
+    // e.preventDefault();
     console.log(delId)
-    const response = await deleteMaintenance(delId);
+    const response = await deleteComplaint(delId);
     if (response.success) {
       console.log(response)
-      fetchAllMaintenance();
+      showSuccessMessage("Complaint Deleted")
+      fetchAllComplaints();
+    }else{
+      showErrorMessage("An Error Occuurred")
     }
   }
 
-
-
-  const handleCreate = async () => {
-    const response = await addMaintenance(mntData);
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    const response = await addComplaint(complaintData);
     if (response.success) {
       console.log(response)
+      closeref.current.click();
+      showSuccessMessage("Complaint Posted")
+      fetchAllComplaints()
     } else {
+      showErrorMessage("An Error Occurred")
       console.log(response);
     }
   }
 
-  const fetchAllMaintenance = async () => {
-    const response = await getMaintenance();
+  const fetchAllComplaints = async () => {
+    const response = await getMyComplaints();
     if (response.success) {
       console.log(response);
-      setMntList(response);
+      setComplaintList(response);
     } else {
       console.log(response);
     }
   }
 
   useEffect(() => {
-    fetchAllMaintenance();
+    fetchAllComplaints();
   }, [])
 
   const userDetails = JSON.parse(localStorage.getItem('userDetails'))
@@ -116,12 +143,13 @@ function Tables() {
     <>
     {userType==='resident' && userDetails?
     <>
+    <ToastContainer></ToastContainer>
       <div className="content w-auto h-auto">
         <Row>
           <Col lg="3" md="3" sm="12" className="mx-4 d-flex align-items-center justify-content-center"><FontAwesomeIcon icon={faCirclePlus} onClick={() => { addRef.current.click() }} style={{ height: "200px", color: "#7a7a7a", cursor:"pointer" }} /></Col>
-          {mntList.maintenance.map((mnt)=>{
+          {complaintList.myComplaints.map((complaint)=>{
             return <>
-              <MaintenanceItem updateItem={updateItem} deleteItem={deleteItem} mnt={mnt}></MaintenanceItem>
+              <ResidentComplaintItem updateItem={updateItem} deleteItem={deleteItem} complaint={complaint}></ResidentComplaintItem>
             </>
           })}
         </Row>
@@ -140,7 +168,7 @@ function Tables() {
           <div className="modal-dialog custom-modal-box">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Add Maintenance</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Post Complaint</h5>
                 <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="row modal-body">
@@ -150,24 +178,24 @@ function Tables() {
                       <form className="row g-3" onSubmit={handleCreate}>
                         <div className="col-12 mb-4">
                           <label htmlFor="subject" className="form-label mb-2">Subject*</label>
-                          <input type="text" name="maintenanceSubject" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                          <input type="text" name="complaintSubject" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
                         </div>
                         <div className="col-12 mb-4">
                           <label htmlFor="description" className="form-label mb-2">Description*</label>
-                          <textarea className="form-control" name="maintenanceDescription" onChange={handleChange} placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
-                        </div>
-                        <div className="col-6 mb-4">
-                          <label htmlFor="subject" className="form-label mb-2">Budget*</label>
-                          <input type="text" name="maintenanceBudget" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                          <textarea className="form-control" name="complaintDescription" onChange={handleChange} placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
                         </div>
                         <div className="col-6 mb-4">
                           <label htmlFor="subject" className="form-label mb-2">Priority*</label>
-                          <input type="text" name="maintenancePriority" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                          <select name="complaintPriority" onChange={handleChange} className="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                            <option value="High">High</option>
+                            <option value="Low">Low</option>
+                          </select>
+                          {/* <input type="text" name="complaintPriority" onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" /> */}
                         </div>
 
                         <div className="col-12">
                           <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
-                          <button type="submit" className="btn btn-success"> Add Maintenace</button>
+                          <button type="submit" className="btn btn-success"> Post Complaint</button>
                         </div>
                       </form>
                     </div>
@@ -185,7 +213,7 @@ function Tables() {
           <div className="modal-dialog custom-modal-box">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Update Maintenance</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Update Complaint</h5>
                 <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="row modal-body">
@@ -195,19 +223,19 @@ function Tables() {
                       <form className="row g-3" onSubmit={handleUpdate}>
                         <div className="col-12 mb-4">
                           <label htmlFor="subject" className="form-label mb-2">Subject*</label>
-                          <input type="text" name="maintenanceSubject" value={mntData.maintenanceSubject} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                          <input type="text" name="complaintSubject" value={complaintData.complaintSubject} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
                         </div>
                         <div className="col-12 mb-4">
                           <label htmlFor="description" className="form-label mb-2">Description*</label>
-                          <textarea className="form-control" name="maintenanceDescription" value={mntData.maintenanceDescription} onChange={handleChange} placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
+                          <textarea className="form-control" name="complaintDescription" value={complaintData.complaintDescription} onChange={handleChange} placeholder="Description" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
                         </div>
                         <div className="col-6 mb-4">
-                          <label htmlFor="subject" className="form-label mb-2">Budget*</label>
-                          <input type="text" name="maintenanceBudget" value={mntData.maintenanceBudget} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                          <label htmlFor="subject" className="form-label mb-2">Status*</label>
+                          <input type="text" name="complaintStatus" value={complaintData.complaintStatus} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
                         </div>
                         <div className="col-6 mb-4">
                           <label htmlFor="subject" className="form-label mb-2">Priority*</label>
-                          <input type="text" name="maintenancePriority" value={mntData.maintenancePriority} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
+                          <input type="text" name="complaintPriority" value={complaintData.complaintPriority} onChange={handleChange} className="form-control" id="inputAddress" required placeholder="" />
                         </div>
 
                         <div className="col-12">
@@ -230,11 +258,11 @@ function Tables() {
           <div className="modal-dialog custom-modal-box">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Delete Maintenance</h5>
+                <h5 className="modal-title" id="exampleModalLabel">Delete Complaint</h5>
                 <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-                <p>Do you want to delete this maintenance?</p>
+                <p>Do you want to delete this complaint?</p>
                 <button type="submit" className="btn btn-outline-danger" onClick={handleClick}>Yes</button>
                 <button type="button" ref={closeDelRef} className="btn btn-outline-success mx-3" data-dismiss="modal">No</button>
               </div>
@@ -248,4 +276,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default ResidentComplaint;

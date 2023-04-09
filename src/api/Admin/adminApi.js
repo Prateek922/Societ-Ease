@@ -1,5 +1,5 @@
 const API_URL = process.env.REACT_APP_API_URL;
-const adminAuthToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiZDYyMzhkMmMtMzQ1ZS00OWY2LTg3OTEtYTM0MDIzYzJiYzE5IiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJ1c2VyVHlwZSI6ImFkbWluIn0sImlhdCI6MTY4MDcwMzg3MH0.qW0ETxJ7FrwVkPw-VTHllWwl-xQMKDC5MMpkCBvQoVk";
+const adminAuthToken = localStorage.getItem('token');
 
 export async function getAllResident(){
     const response = await fetch(`${API_URL}/api/admin/getallres`,{
