@@ -224,7 +224,7 @@ function ResidentDashboard() {
                                                 </Col>
                                                 <Col md="10" xs="7">
                                                     <div className="numbers">
-                                                        <p className="card-category">{maintenanceCount} Maintenance</p>
+                                                        <p className="card-category">{maintenanceCount} Undergoing Maintenance</p>
                                                         <Link to="/resident/Maintenance" className="linktag" ><CardTitle tag="p">Maintenance   </CardTitle></Link>
                                                         <p />
                                                     </div>
@@ -250,7 +250,7 @@ function ResidentDashboard() {
                                                 </Col>
                                                 <Col md="10" xs="7">
                                                     <div className="numbers">
-                                                        <p className="card-category">{catBill[0].total_Dues} Dues Pending</p>
+                                                        <p className="card-category">Rs. {catBill[0].total_Dues} Due</p>
                                                         <Link to="/resident/Bills" className="linktag" ><CardTitle tag="p">Bills </CardTitle></Link>
                                                         <p />
                                                     </div>
