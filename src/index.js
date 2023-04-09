@@ -12,7 +12,6 @@ import Login  from "layouts/Login"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 
-
 root.render(
 
   <BrowserRouter>
