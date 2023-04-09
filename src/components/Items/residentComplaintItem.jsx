@@ -10,7 +10,7 @@ import {
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
   import { faPen ,faTrash,faCircleDot} from '@fortawesome/free-solid-svg-icons';
 
-export default function residentComplaintItem(props) {
+function MaintenanceItem(props) {
     const {updateItem, deleteItem, mnt} = props;
     const priorityColor = mnt.maintenancePriority=="High"?'red':'green'
     const mntSubject = mnt.maintenanceSubject.length>15?mnt.maintenanceSubject.slice(0,15)+'...': mnt.maintenanceSubject;
@@ -47,3 +47,4 @@ export default function residentComplaintItem(props) {
     )
 }
 
+export default MaintenanceItem
