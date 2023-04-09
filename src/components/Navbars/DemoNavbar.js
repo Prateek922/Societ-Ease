@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -14,6 +14,15 @@ function Header(props) {
   const [color, setColor] = React.useState("transparent");
   const sidebarToggle = React.useRef();
   const location = useLocation();
+  const history = useHistory();
+
+  const handleLogout = ()=>{
+    localStorage.removeItem('userDetails')
+    localStorage.removeItem('token')
+    localStorage.removeItem('userType')
+    history.push("/login");
+  }
+
   const toggle = () => {
     if (isOpen) {
       setColor("transparent");
@@ -90,7 +99,7 @@ function Header(props) {
           </div>
           <NavbarBrand href="/">{getBrand()}</NavbarBrand>
         </div>
-       <button className="btn" style={{borderRadius:"6px"}}>Logout</button>
+       <button className="btn" style={{borderRadius:"6px"}} onClick = {handleLogout}>Logout</button>
       </Container>
     </Navbar>
   );

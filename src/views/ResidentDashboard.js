@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {
     Card,
     CardBody,
@@ -9,9 +9,16 @@ import {
 } from "reactstrap";
 import { Link } from 'react-router-dom';
 
+
 function ResidentDashboard() {
+    const residentData = localStorage.getItem('userDetails')
+    useEffect(() => {
+        console.log(residentData)
+    }, [])
+
     return (
-        <>
+        <>  
+        {residentData? 
             <div className="content">
                 <Row>
                     <Col md="4">
@@ -28,11 +35,11 @@ function ResidentDashboard() {
                                             alt="..."
                                             className="avatar border-gray"
                                             src={require("assets/img/logo-profile.png")}
-                                            style={{ width: "150px", height: "auto" }}
+                                            style={{ width: "150px", height: "auto"}}
                                         />
-                                        <h3 className="title">Prateek Arora</h3>
+                                        <h3 className="title">{residentData.residentName}</h3>
                                     </a>
-                                    <p className="description"><strong>Security key-</strong>XXXXXXXXXXXXXXX</p>
+                                    <p className="description"><strong>Security key-</strong>{residentData.securityKey}</p>
                                 </div>
                             </CardBody>
                             <CardFooter>
@@ -41,7 +48,7 @@ function ResidentDashboard() {
                                     <Row>
                                         <Col className="ml-auto" lg="3" md="6" xs="6">
                                             <h5>
-                                                12 <br />
+                                                {residentData.residentRoomNumber}<br />
                                                 <small>Room no.</small>
                                             </h5>
                                         </Col>
@@ -173,6 +180,7 @@ function ResidentDashboard() {
 
                 </Row>
             </div>
+            : <> Not Authorised </>}
         </>
     );
 }

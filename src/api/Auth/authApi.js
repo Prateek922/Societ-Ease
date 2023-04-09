@@ -1,16 +1,19 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
 export async function loginUser(credentials){
+    console.log(credentials)
+    console.log('...');
     const response = await fetch(`${API_URL}/api/auth/login`,{
         method: 'POST',
         headers: {
            'Content-Type': 'application/json'
         },
-      
         body: JSON.stringify({...credentials})
     });
 
-    return await response.json();
+    const res = await response.json();
+    console.log(res);
+    return res;
 }
 
 

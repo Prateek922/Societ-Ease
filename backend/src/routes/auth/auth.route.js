@@ -120,7 +120,7 @@ router.post('/createresident',async (req,res)=>{
             residentAadhar: req.body.residentAadhar,
             residentEmail:req.body.residentEmail,
             residentContactNumber: req.body.residentContactNumber,
-            residentRoomNumber: req.body.roomNumber,
+            residentRoomNumber: req.body.residentRoomNumber,
             securityKey: req.body.securityKey,
             status:"active"
         });

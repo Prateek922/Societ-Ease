@@ -6,9 +6,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.3.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-
 import AdminLayout from "layouts/Admin.js";
 import ResidentLayout from "layouts/Resident";
+import Login  from "layouts/Login"
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -16,7 +16,8 @@ root.render(
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/resident" render={(props) => <ResidentLayout {...props} />} />
-      <Redirect to="/admin/dashboard" />
+      <Route path="/login" render={(props) => <Login {...props} />} />
+      <Redirect to="/login" />
     </Switch>
   </BrowserRouter>
 );
