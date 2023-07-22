@@ -65,13 +65,16 @@ function Bills() {
     });
   }
   
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     const response = await addBill(billData);
     if (response.success) {
       console.log(response);
+      closeref.current.click();
       showSuccessMessage("Bill Created Successfully")
       fetchAllBills();
     } else {
+      closeref.current.click()
       showErrorMessage("An Error Occurred")
     }
   }
@@ -203,7 +206,8 @@ function Bills() {
                         <div className="col-6 mb-4">
                           <label htmlFor="billtype" className="form-label mb-2">Bill Type*</label>
                           <select name="billType" onChange={handleChange} className="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                            <option value="Electricity">Electricity</option>
+                            <option value="" selected>Choose..</option>
+                            <option value="Electricity">Electricty</option>
                             <option value="Water">Water</option>
                             <option value="Maintenance">Maintenance</option>
                             <option value="Wifi">Wifi</option>

@@ -22,6 +22,7 @@ router.post('/login',async (req,res)=>{
         if(user.userType!=req.body.userType){
             return res.status(400).json({success, error: "You don't have permission"})
         }
+        
         let password = req.body.password;
         let passwordMatch = await bcrypt.compare(password,user.password);
         if(!passwordMatch){

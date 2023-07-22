@@ -8,11 +8,11 @@ import {
     Col
   } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen ,faTrash,faCircleDot} from '@fortawesome/free-solid-svg-icons';
+import { faCircleDot} from '@fortawesome/free-solid-svg-icons';
 const moment = require('moment') 
 
 function MaintenanceItem(props) {
-    const {updateItem, deleteItem, mnt} = props;
+    const {mnt} = props;
     const priorityColor = mnt.maintenancePriority=="High"?'red':'green'
     const mntSubject = mnt.maintenanceSubject.length>23?mnt.maintenanceSubject.slice(0,23)+'...': mnt.maintenanceSubject;
     return (

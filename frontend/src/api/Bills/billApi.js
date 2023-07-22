@@ -3,6 +3,7 @@ const adminAuthToken = localStorage.getItem('token')
 const residentAuthToken = localStorage.getItem('token')
 
 export async function addBill(billData){
+    console.log(billData)
     const response = await fetch(`${API_URL}/api/bill/createbill`,{
         method: 'POST',
         headers: {
