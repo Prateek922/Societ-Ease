@@ -1,19 +1,74 @@
-const gulp = require('gulp');
-const appendPrepend = require('gulp-append-prepend');
+const gulp = require("gulp");
+const gap = require("gulp-append-prepend");
 
-// Define a task named 'licenses'
-gulp.task('licenses', function (done) {
-  // Use gulp-append-prepend to run the npm scripts in order
-  gulp.src('package.json')
-    .pipe(appendPrepend.prepend([
-      'npm run install:clean &&',
-      'npm run compile-sass &&',
-      'npm run minify-sass &&',
-      'npm run map-sass &&'
-    ].join(' ')))
-    .pipe(gulp.dest('.')) // Save the modified package.json
-    .on('end', function () {
-      console.log('All scripts completed successfully!');
-      done();
-    });
+gulp.task("licenses", async function () {
+  // this is to add Creative Tim licenses in the production mode for the minified js
+  gulp
+    .src("build/static/js/*chunk.js", { base: "./" })
+    .pipe(
+      gap.prependText(`/*!
+
+=========================================================
+* Paper Dashboard React - v1.3.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
+* Copyright 2021 Creative Tim (http://www.creative-tim.com)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/`)
+    )
+    .pipe(gulp.dest("./", { overwrite: true }));
+
+  // this is to add Creative Tim licenses in the production mode for the minified html
+  gulp
+    .src("build/index.html", { base: "./" })
+    .pipe(
+      gap.prependText(`<!--
+
+=========================================================
+* Paper Dashboard React - v1.3.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
+* Copyright 2021 Creative Tim (http://www.creative-tim.com)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+-->`)
+    )
+    .pipe(gulp.dest("./", { overwrite: true }));
+
+  // this is to add Creative Tim licenses in the production mode for the minified css
+  gulp
+    .src("build/static/css/*chunk.css", { base: "./" })
+    .pipe(
+      gap.prependText(`/*!
+
+=========================================================
+* Paper Dashboard React - v1.3.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
+* Copyright 2021 Creative Tim (http://www.creative-tim.com)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/`)
+    )
+    .pipe(gulp.dest("./", { overwrite: true }));
+  return;
 });
