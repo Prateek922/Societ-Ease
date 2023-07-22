@@ -1,6 +1,6 @@
 import React,{useEffect} from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.3.0";
@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
 
-  <BrowserRouter>
+  <HashRouter>
     <Switch>
       <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Route path="/resident" render={(props) => <ResidentLayout {...props} />} />
@@ -23,5 +23,5 @@ root.render(
       <Route path="/login" render={(props) => <Login {...props} />} />
       <Redirect to="/login" />
     </Switch>
-  </BrowserRouter>
+  </HashRouter>
 );
