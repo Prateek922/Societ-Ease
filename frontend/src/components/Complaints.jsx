@@ -10,7 +10,7 @@ export default function Complaints() {
           {
             "_id": "642d90f726a72e078889571b",
             "complaintID": "20c92c56-79c9-4649-8988-9cecd6b9d91a",
-            "complaintSubject": "Demo",
+            "complaintSubject": "Dem",
             "complaintDescription": "kjjhkkjggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
             "complaintBy": "undefined Room No: undefined",
             "complaintStatus": "Resolved",
@@ -44,7 +44,7 @@ export default function Complaints() {
         <>
             <div className="content"><h2 className="title" style={{marginBottom:"55px",marginTop:"60px"}}>Resident's complaints</h2>
                 <Row>
-                    {complaintList.complaints.map((complaint)=>{return <>
+                    {complaintList?.complaints?.map((complaint)=>{return <>
                         <ComplaintItem complaint = {complaint} key={complaint._id}> </ComplaintItem>
                     </>
                     })}

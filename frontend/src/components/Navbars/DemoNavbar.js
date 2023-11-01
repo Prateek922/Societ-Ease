@@ -19,6 +19,7 @@ function Header(props) {
     localStorage.removeItem('userDetails')
     localStorage.removeItem('token')
     localStorage.removeItem('userType')
+    localStorage.removeItem('auth-token')
     history.push("/login");
   }
 

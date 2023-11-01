@@ -191,7 +191,7 @@ function Bills() {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Add Bill</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="row modal-body">
                 <div className="log popup-form">
@@ -220,7 +220,7 @@ function Bills() {
                         </div>
 
                         <div className="col-12">
-                          <button ref={closeref} type="button" className="btn" data-bs-dismiss="modal">Close</button>
+                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
                           <button type="submit" className="btn btn-success"> Add Bill</button>
                         </div>
                       </form>

@@ -9,8 +9,10 @@ const fetchuser = (req,res,next)=>{
     }
 
     try{
+        console.log(authToken);
         const data = jwt.verify(authToken,JWT_SECRET_KEY);
         req.user = data.user;
+        console.log("dfddd",req.user);
         next();
     }catch(err){
         res.status(401).send({error:"Internal server error"});

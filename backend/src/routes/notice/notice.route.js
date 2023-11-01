@@ -6,12 +6,13 @@ const { uuid } = require('uuidv4');
 const fetchuser = require('../../middlewares/fetchuser');
 
 //ROUTE 1: Creating notice, Requires Authentication from admin
-router.post('/createnotice',fetchuser,async (req,res)=>{
+router.post('/createnotice',fetchuser, async (req,res)=>{
     let success = false;
     
     try{
         const {noticeSubject, noticeDescription} = req.body;
         const userType = req.user.userType;
+        console.log(userType);
 
         if(userType !== 'admin'){
             return res.status(403).json({success, error:"Permission Denied!"})

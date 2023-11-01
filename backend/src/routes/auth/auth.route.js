@@ -19,7 +19,7 @@ router.post('/login',async (req,res)=>{
             return res.status(400).json({success,error:"Invalid credentials"});
         }
 
-        if(user.userType!=req.body.userType){
+        if(user.userType !== req.body.userType){
             return res.status(400).json({success, error: "You don't have permission"})
         }
         

@@ -13,6 +13,7 @@ import { getMaintenance, updateMaintenance, deleteMaintenance, addMaintenance } 
 
 function Tables() {
   const closeref = useRef();
+  const closeAddRef = useRef();
   const addRef = useRef();
   const editRef = useRef();
   const delRef = useRef();
@@ -110,7 +111,8 @@ function Tables() {
     e.preventDefault()
     const response = await addMaintenance(mntData);
     if (response.success) {
-      closeref.current.click();
+      closeAddRef.current.click();
+      fetchAllMaintenance();
       showSuccessMessage("Maintenance Created Successfully")
       console.log(response)
     } else {
@@ -197,7 +199,7 @@ function Tables() {
                         </div>
 
                         <div className="col-12">
-                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button ref={closeAddRef} type="button" className="btn" data-dismiss="modal">Close</button>
                           <button type="submit" className="btn btn-success"> Add Maintenace</button>
                         </div>
                       </form>

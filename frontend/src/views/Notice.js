@@ -13,6 +13,7 @@ import NoticeItem from "components/Items/NoticeItem";
 
 function Notice() {
   const closeref = useRef();
+  const closeAddRef = useRef();
   const addRef = useRef();
   const editRef = useRef();
   const delRef = useRef();
@@ -106,8 +107,10 @@ function Notice() {
   const handleCreate = async (e) => {
     e.preventDefault();
     const response = await addNotice(noticeData);
+    closeAddRef.current.click();
     if (response.success) {
-      closeref.current.click();
+      
+      fetchAllNotices();
       showSuccessMessage("Notice Created!")
       console.log(response)
     } else {
@@ -165,7 +168,7 @@ function Notice() {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Add Notice</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="row modal-body">
                 <div className="log popup-form">
@@ -181,7 +184,7 @@ function Notice() {
                           <textarea className="form-control" name="noticeDescription" onChange={handleChange} placeholder="Body of notice" id="floatingTextarea2" style={{ height: '200px' }}></textarea>
                         </div>
                         <div className="col-12">
-                          <button ref={closeref} type="button" className="btn" data-dismiss="modal">Close</button>
+                          <button ref={closeAddRef} type="button" className="btn" data-dismiss="modal">Close</button>
                           <button type="submit" className="btn btn-success"> Add Notice</button>
                         </div>
                       </form>
@@ -201,7 +204,7 @@ function Notice() {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Update Notice</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="row modal-body">
                 <div className="log popup-form">
